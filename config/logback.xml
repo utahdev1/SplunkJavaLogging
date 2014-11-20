@@ -11,7 +11,7 @@
     <delivery>stream</delivery>
     <user>admin</user>
     <metaSourcetype>testing</metaSourcetype>
-    <pass>splunk</pass>
+    <pass>sawasdee</pass>
     <maxQueueSize>5MB</maxQueueSize>
     <dropEventsOnQueueFull>false</dropEventsOnQueueFull>
     <metaSource>rest</metaSource>
@@ -28,7 +28,7 @@
 <!--Send log events to a Splunk Raw TCP server socket-->
   <appender name="splunkrawtcp" class="com.splunk.logging.logback.appender.SplunkRawTCPAppender">
     <port>5151</port>
-    <host>ubuntu-splunk</host>
+    <host>somehost</host>
     <maxQueueSize>5MB</maxQueueSize>
     <dropEventsOnQueueFull>false</dropEventsOnQueueFull>
     <layout class="ch.qos.logback.classic.PatternLayout">
