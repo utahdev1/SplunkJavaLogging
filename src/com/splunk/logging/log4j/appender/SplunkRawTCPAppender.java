@@ -62,6 +62,20 @@ public class SplunkRawTCPAppender extends AppenderSkeleton {
 
 		String formatted = layout.format(event);
 
+        //send error stack traces to splunk
+        if(layout.ignoresThrowable()) {
+            String[] s = event.getThrowableStrRep();
+            StringBuilder stackTrace = new StringBuilder();
+            if (s != null) {
+                int len = s.length;
+                for(int i = 0; i < len; i++) {
+                    stackTrace.append(Layout.LINE_SEP);
+                    stackTrace.append(s[i]);
+                }
+            }
+            formatted += stackTrace.toString();
+        }
+
 		sri.streamEvent(formatted);
 
 	}
