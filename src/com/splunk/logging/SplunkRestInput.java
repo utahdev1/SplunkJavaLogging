@@ -72,6 +72,7 @@ public class SplunkRestInput extends SplunkInput {
 
 	private void initService() {
 
+		System.setProperty("splunk.securetransport.protocol", "tls");
 		this.service = new Service(host, port);
 		this.service.login(user, pass);
 		this.receivers = service.getReceiver();
