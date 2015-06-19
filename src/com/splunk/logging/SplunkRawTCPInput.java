@@ -14,6 +14,7 @@ import java.net.Socket;
  */
 
 public class SplunkRawTCPInput extends SplunkInput{
+	private static int SOCKET_BUFFER_SIZE = 8 * 1024; // Default to 8192
 
 	// connection props
 	private String host = "";
@@ -23,6 +24,14 @@ public class SplunkRawTCPInput extends SplunkInput{
 	private Socket streamSocket = null;
 	private OutputStream ostream;
 	private Writer writerOut = null;
+
+	public static int getSocketBufferSize() {
+		return SOCKET_BUFFER_SIZE;
+	}
+
+	public static void setSocketBufferSize(int bufferSize) {
+		SOCKET_BUFFER_SIZE = bufferSize;
+	}
 
 	/**
 	 * Create a SplunkRawTCPInput object to send events to Splunk via Raw TCP
@@ -50,6 +59,8 @@ public class SplunkRawTCPInput extends SplunkInput{
 
 		streamSocket = new Socket(host, port);
 		if (streamSocket.isConnected()) {
+			streamSocket.setSendBufferSize(getSocketBufferSize());
+			streamSocket.setReceiveBufferSize(getSocketBufferSize());
 			ostream = streamSocket.getOutputStream();
 			writerOut = new OutputStreamWriter(ostream, "UTF8");
 		}
