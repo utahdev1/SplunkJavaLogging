@@ -31,9 +31,9 @@ public class SplunkRestAppender extends AppenderBase<ILoggingEvent> {
 	private String metaIndex = "";;
 	private String metaHostRegex = "";;
 	private String metaHost = "";;
-	
-	//queuing settings
-	private String maxQueueSize; 
+
+	// queuing settings
+	private String maxQueueSize;
 	private boolean dropEventsOnQueueFull;
 
 	private SplunkRestInput sri;
@@ -81,8 +81,8 @@ public class SplunkRestAppender extends AppenderBase<ILoggingEvent> {
 
 		if (sri == null) {
 			try {
-				sri = new SplunkRestInput(user, pass, host, port, red, delivery
-						.equals(STREAM) ? true : false);
+				sri = new SplunkRestInput(user, pass, host, port, red,
+						delivery.equals(STREAM) ? true : false);
 				sri.setMaxQueueSize(maxQueueSize);
 				sri.setDropEventsOnQueueFull(dropEventsOnQueueFull);
 			} catch (Exception e) {

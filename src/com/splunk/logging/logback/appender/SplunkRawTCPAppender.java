@@ -18,10 +18,10 @@ public class SplunkRawTCPAppender extends AppenderBase<ILoggingEvent> {
 	private String host = "";
 	private int port = 5150;
 
-	//queuing settings
-	private String maxQueueSize; 
+	// queuing settings
+	private String maxQueueSize;
 	private boolean dropEventsOnQueueFull;
-	
+
 	private SplunkRawTCPInput sri;
 
 	private Layout<ILoggingEvent> layout;
@@ -119,7 +119,7 @@ public class SplunkRawTCPAppender extends AppenderBase<ILoggingEvent> {
 	public void setDropEventsOnQueueFull(boolean dropEventsOnQueueFull) {
 		this.dropEventsOnQueueFull = dropEventsOnQueueFull;
 	}
-	
+
 	public Layout<ILoggingEvent> getLayout() {
 		return layout;
 	}

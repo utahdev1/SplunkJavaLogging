@@ -1,7 +1,7 @@
 <project name="SPLUNK Logging" default="build_release" basedir="..">
 	<description>
 		SPLUNK Logging Build Script
-    </description>
+	</description>
 
 
 	<property file="build/build.properties" />
@@ -28,7 +28,8 @@
 
 		<mkdir dir="${temp_build}/${classes}" />
 
-		<javac srcdir="${src}" destdir="${temp_build}/${classes}" target="${javaClassTarget}">
+		<javac srcdir="${src}" destdir="${temp_build}/${classes}"
+			target="${javaClassTarget}">
 			<classpath refid="project.class.path" />
 		</javac>
 
@@ -73,11 +74,149 @@
 		<delete dir="${temp_build}/${classes}" />
 
 		<tar destfile="${release}/${id}-${version}${suffix}" compression="${compressionType}">
-			<zipfileset dir="${temp_build}" prefix="${id}"  />
+			<zipfileset dir="${temp_build}" prefix="${id}" />
 		</tar>
 
 		<delete dir="${temp_build}" />
 
 	</target>
+
+	<target name="build_log4j" depends="compile"
+		description="generate a log4j only distribution">
+		<!-- Create the distribution directory -->
+
+
+		<copy todir="${temp_build}/${lib}">
+			<fileset dir="${lib}"
+				includes="splunk_tlsv12.jar,log4j-1.2.16.jar,commons-lang-2.4.jar" />
+
+		</copy>
+
+
+
+		<copy todir="${temp_build}/${config}">
+			<fileset dir="${config}" includes="log4j.properties" />
+		</copy>
+
+
+		<copy todir="${temp_build}/3rdparty_licenses">
+			<fileset dir="3rdparty_licenses" />
+		</copy>
+
+
+		<copy todir="${temp_build}">
+			<fileset file="LICENSE" />
+			<fileset file="README.md" />
+		</copy>
+
+
+		<jar jarfile="${temp_build}/${lib}/${id}-log4j.jar">
+			<fileset dir="${temp_build}/${classes}"
+				includes="com/splunk/logging/*.class,com/splunk/logging/log4j/**" />
+
+		</jar>
+
+		<delete dir="${temp_build}/${classes}" />
+
+		<tar destfile="${release}/${id}-log4j-${version}${suffix}"
+			compression="${compressionType}">
+			<zipfileset dir="${temp_build}" prefix="${id}" />
+		</tar>
+
+		<delete dir="${temp_build}" />
+
+	</target>
+
+	<target name="build_logback" depends="compile"
+		description="generate a logback only distribution">
+		<!-- Create the distribution directory -->
+
+
+		<copy todir="${temp_build}/${lib}">
+			<fileset dir="${lib}"
+				includes="splunk_tlsv12.jar,logback*.jar,commons-lang-2.4.jar" />
+
+		</copy>
+
+
+
+		<copy todir="${temp_build}/${config}">
+			<fileset dir="${config}" includes="logback.xml" />
+		</copy>
+
+
+		<copy todir="${temp_build}/3rdparty_licenses">
+			<fileset dir="3rdparty_licenses" />
+		</copy>
+
+
+		<copy todir="${temp_build}">
+			<fileset file="LICENSE" />
+			<fileset file="README.md" />
+		</copy>
+
+
+		<jar jarfile="${temp_build}/${lib}/${id}-logback.jar">
+			<fileset dir="${temp_build}/${classes}"
+				includes="com/splunk/logging/*.class,com/splunk/logging/logback/**" />
+
+		</jar>
+
+		<delete dir="${temp_build}/${classes}" />
+
+		<tar destfile="${release}/${id}-logback-${version}${suffix}"
+			compression="${compressionType}">
+			<zipfileset dir="${temp_build}" prefix="${id}" />
+		</tar>
+
+		<delete dir="${temp_build}" />
+
+	</target>
+
+	<target name="build_jdk" depends="compile"
+		description="generate a jdk only distribution">
+		<!-- Create the distribution directory -->
+
+
+		<copy todir="${temp_build}/${lib}">
+			<fileset dir="${lib}" includes="splunk_tlsv12.jar" />
+
+		</copy>
+
+
+
+		<copy todir="${temp_build}/${config}">
+			<fileset dir="${config}" includes="jdklogging.properties" />
+		</copy>
+
+
+		<copy todir="${temp_build}/3rdparty_licenses">
+			<fileset dir="3rdparty_licenses" />
+		</copy>
+
+
+		<copy todir="${temp_build}">
+			<fileset file="LICENSE" />
+			<fileset file="README.md" />
+		</copy>
+
+
+		<jar jarfile="${temp_build}/${lib}/${id}-jdk.jar">
+			<fileset dir="${temp_build}/${classes}"
+				includes="com/splunk/logging/*.class,com/splunk/logging/jdk/**" />
+
+		</jar>
+
+		<delete dir="${temp_build}/${classes}" />
+
+		<tar destfile="${release}/${id}-jdk-${version}${suffix}"
+			compression="${compressionType}">
+			<zipfileset dir="${temp_build}" prefix="${id}" />
+		</tar>
+
+		<delete dir="${temp_build}" />
+
+	</target>
+
 
 </project>

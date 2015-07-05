@@ -32,10 +32,10 @@ public class SplunkRestAppender extends AppenderSkeleton {
 	private String metaHostRegex = "";;
 	private String metaHost = "";;
 
-	//queuing settings
-	private String maxQueueSize; 
+	// queuing settings
+	private String maxQueueSize;
 	private boolean dropEventsOnQueueFull;
-	
+
 	private SplunkRestInput sri;
 	private RestEventData red = new RestEventData();
 
@@ -64,8 +64,8 @@ public class SplunkRestAppender extends AppenderSkeleton {
 
 		try {
 			if (sri == null) {
-				sri = new SplunkRestInput(user, pass, host, port, red, delivery
-						.equals(STREAM) ? true : false);
+				sri = new SplunkRestInput(user, pass, host, port, red,
+						delivery.equals(STREAM) ? true : false);
 				sri.setMaxQueueSize(maxQueueSize);
 				sri.setDropEventsOnQueueFull(dropEventsOnQueueFull);
 			}
@@ -198,7 +198,7 @@ public class SplunkRestAppender extends AppenderSkeleton {
 		this.metaHost = metaHost;
 		red.setHost(metaHost);
 	}
-	
+
 	public String getMaxQueueSize() {
 		return maxQueueSize;
 	}
@@ -214,6 +214,5 @@ public class SplunkRestAppender extends AppenderSkeleton {
 	public void setDropEventsOnQueueFull(boolean dropEventsOnQueueFull) {
 		this.dropEventsOnQueueFull = dropEventsOnQueueFull;
 	}
-
 
 }

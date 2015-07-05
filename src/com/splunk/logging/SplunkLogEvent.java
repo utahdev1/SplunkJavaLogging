@@ -1374,11 +1374,11 @@ public class SplunkLogEvent {
 	public void addPair(String key, String value) {
 
 		if (quoteValues)
-			this.eventMessage.append(key).append(KVDELIM).append(QUOTE).append(
-					value).append(QUOTE).append(PAIRDELIM);
+			this.eventMessage.append(key).append(KVDELIM).append(QUOTE)
+					.append(value).append(QUOTE).append(PAIRDELIM);
 		else
-			this.eventMessage.append(key).append(KVDELIM).append(value).append(
-					PAIRDELIM);
+			this.eventMessage.append(key).append(KVDELIM).append(value)
+					.append(PAIRDELIM);
 
 	}
 
@@ -1392,8 +1392,8 @@ public class SplunkLogEvent {
 
 		if (useInternalDate) {
 			StringBuffer clonedMessage = new StringBuffer();
-			clonedMessage.append(DATEFORMATTER.format(new Date())).append(
-					PAIRDELIM).append(this.eventMessage);
+			clonedMessage.append(DATEFORMATTER.format(new Date()))
+					.append(PAIRDELIM).append(this.eventMessage);
 			event = clonedMessage.toString();
 		} else
 			event = eventMessage.toString();

@@ -107,20 +107,20 @@ public class SplunkRestInput extends SplunkInput {
 
 		if (red != null) {
 			if (red.getIndex().length() > 0)
-				urlArgs.add(RestEventData.RECEIVERS_SIMPLE_ARG_INDEX, red
-						.getIndex());
+				urlArgs.add(RestEventData.RECEIVERS_SIMPLE_ARG_INDEX,
+						red.getIndex());
 			if (red.getSource().length() > 0)
-				urlArgs.add(RestEventData.RECEIVERS_SIMPLE_ARG_SOURCE, red
-						.getSource());
+				urlArgs.add(RestEventData.RECEIVERS_SIMPLE_ARG_SOURCE,
+						red.getSource());
 			if (red.getSourcetype().length() > 0)
-				urlArgs.add(RestEventData.RECEIVERS_SIMPLE_ARG_SOURCETYPE, red
-						.getSourcetype());
+				urlArgs.add(RestEventData.RECEIVERS_SIMPLE_ARG_SOURCETYPE,
+						red.getSourcetype());
 			if (red.getHost().length() > 0)
-				urlArgs.add(RestEventData.RECEIVERS_SIMPLE_ARG_HOST, red
-						.getHost());
+				urlArgs.add(RestEventData.RECEIVERS_SIMPLE_ARG_HOST,
+						red.getHost());
 			if (red.getHostRegex().length() > 0)
-				urlArgs.add(RestEventData.RECEIVERS_SIMPLE_ARG_HOSTREGEX, red
-						.getHostRegex());
+				urlArgs.add(RestEventData.RECEIVERS_SIMPLE_ARG_HOSTREGEX,
+						red.getHostRegex());
 
 		}
 		return urlArgs;
@@ -153,13 +153,13 @@ public class SplunkRestInput extends SplunkInput {
 
 		try {
 			if (streamSocket == null) {
-				this.receivers.log(args,currentMessage);
+				this.receivers.log(args, currentMessage);
 
 				// flush the queue
 				while (queueContainsEvents()) {
 					String messageOffQueue = dequeue();
 					currentMessage = messageOffQueue;
-					this.receivers.log(args,currentMessage);
+					this.receivers.log(args, currentMessage);
 				}
 			}
 		} catch (Exception e) {

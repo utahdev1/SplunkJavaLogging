@@ -33,10 +33,10 @@ public class SplunkRestHandler extends Handler {
 	private String metaHostRegex = "";
 	private String metaHost = "";
 
-	//queuing settings
-	private String maxQueueSize; 
+	// queuing settings
+	private String maxQueueSize;
 	private boolean dropEventsOnQueueFull;
-	
+
 	private SplunkRestInput sri;
 	private RestEventData red = new RestEventData();
 
@@ -71,7 +71,7 @@ public class SplunkRestHandler extends Handler {
 		setUser(manager.getProperty(cname + ".user"));
 		setPass(manager.getProperty(cname + ".pass"));
 		setHost(manager.getProperty(cname + ".host"));
-		
+
 		setDelivery(manager.getProperty(cname + ".delivery"));
 		setPort(Integer.parseInt(manager.getProperty(cname + ".port")));
 
@@ -82,9 +82,9 @@ public class SplunkRestHandler extends Handler {
 		setMetaSourcetype(manager.getProperty(cname + ".metaSourcetype"));
 
 		setMaxQueueSize(manager.getProperty(cname + ".maxQueueSize"));
-		setDropEventsOnQueueFull(Boolean.parseBoolean(manager.getProperty(cname + ".dropEventsOnQueueFull")));
-		
-		
+		setDropEventsOnQueueFull(Boolean.parseBoolean(manager.getProperty(cname
+				+ ".dropEventsOnQueueFull")));
+
 		setLevel(Level.parse(manager.getProperty(cname + ".level")));
 		setFilter(null);
 		setFormatter(new SplunkFormatter());
@@ -241,7 +241,7 @@ public class SplunkRestHandler extends Handler {
 			red.setHost(metaHost);
 		}
 	}
-	
+
 	public String getMaxQueueSize() {
 		return maxQueueSize;
 	}

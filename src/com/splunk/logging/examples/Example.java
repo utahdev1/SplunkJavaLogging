@@ -40,7 +40,7 @@ public class Example {
 		event.addPair("somefieldname", "foobar");
 
 		// log a splunk log event generated string using lazy string formatting
-		logger.info("{}",event);
+		logger.info("{}", event);
 
 	}
 

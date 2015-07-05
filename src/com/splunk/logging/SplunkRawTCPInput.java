@@ -13,7 +13,7 @@ import java.net.Socket;
  * 
  */
 
-public class SplunkRawTCPInput extends SplunkInput{
+public class SplunkRawTCPInput extends SplunkInput {
 	private static int SOCKET_BUFFER_SIZE = 8 * 1024; // Default to 8192
 
 	// connection props
@@ -89,27 +89,27 @@ public class SplunkRawTCPInput extends SplunkInput{
 	 * @param message
 	 */
 	public void streamEvent(String message) {
-		
+
 		String currentMessage = message;
 		try {
 
 			if (writerOut != null) {
 
-				//send the message
+				// send the message
 				writerOut.write(currentMessage + "\n");
 
-				//flush the queue
-				while(queueContainsEvents()){
+				// flush the queue
+				while (queueContainsEvents()) {
 					String messageOffQueue = dequeue();
 					currentMessage = messageOffQueue;
 					writerOut.write(currentMessage + "\n");
 				}
 				writerOut.flush();
-			}			
+			}
 
 		} catch (IOException e) {
-			
-			//something went wrong , put message on the queue for retry
+
+			// something went wrong , put message on the queue for retry
 			enqueue(currentMessage);
 			try {
 				closeStream();
