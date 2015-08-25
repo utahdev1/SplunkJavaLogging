@@ -1,5 +1,1 @@
 com.splunk.logging
-com.splunk.logging.examples
-com.splunk.logging.jdk.handler
-com.splunk.logging.log4j.appender
-com.splunk.logging.logback.appender

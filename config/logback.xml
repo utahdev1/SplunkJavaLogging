@@ -40,6 +40,27 @@
     </layout>
   </appender>
   
+<!--Send log events to a Splunk HEC Endpoint-->
+  <appender name="splunkrawtcp" class="com.splunk.logging.logback.appender.SplunkHECAppender">
+    <port>8088</port>
+    <host>somehost</host>
+    <token>YOUR TOKEN</token>
+    <https>false</https>
+    <poolsize>1</poolsize>
+    <index>main</index>
+    <source>foo</source>
+    <sourcetype>bar</sourcetype>
+    <maxQueueSize>5MB</maxQueueSize>
+    <dropEventsOnQueueFull>false</dropEventsOnQueueFull>
+    <layout class="ch.qos.logback.classic.PatternLayout">
+      <pattern>%m%n</pattern>
+      <!-- optionally you can enrich the messages with formatting tokens from the logging framework
+      <pattern>%d %m%n</pattern>
+      <pattern>%m loglevel="%p"%n</pattern>
+       -->
+    </layout>
+  </appender>
+  
 <!--Send log events to a console-->
   <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
     <Target>System.out</Target>

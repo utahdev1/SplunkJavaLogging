@@ -14,10 +14,13 @@ This framework contains :
 *   Implementation of Splunk CIM(Common Information Model) and best practice logging semantics
 *   java.util.logging handler for logging to Splunk REST endpoints
 *   java.util.logging handler for logging to Splunk Raw TCP Server Socket
+*   java.util.logging handler for logging to Splunk HEC Endpoint
 *   Log4j appender for logging to Splunk REST endpoints
 *   Log4j appender for logging to Splunk Raw TCP Server Socket
+*   Log4j appender for logging to Splunk HEC Endpoint
 *   Logback appender for logging to Splunk REST endpoints
 *   Logback appender for logging to Splunk Raw TCP Server Socket
+*   Logback appender for logging to Splunk HEC Endpoint
 *   Example logging configuration files
 *   Javadocs
 
@@ -25,16 +28,14 @@ If you want to use UDP to send events to Splunk , then Log4j 1.x and Logback  al
 Log4j 2 has a UDP Appender and Syslog Appender.
 And of course you can still use any File appenders and have the file monitored by a Splunk Universal Forwarder.
 
-I generally recommend using the raw TCP handlers/appenders I have provided , they perform the best, and have features coded into them for 
-auto connection re-establishment and configurable buffering of log events which will get flushed upon reconnection.
+I generally recommend using the raw TCP or HEC handlers/appenders I have provided , they perform the best, and have features coded into them for auto connection re-establishment and configurable buffering of log events which will get flushed upon reconnection.
 
 ## Logging frameworks galore
 
 Log4j 2 and Log4j 1.x are very distinct from one another.
 Logback was actually the "new version" of Log4j 1.x , and then Log4J 2 attempted to improve upon Logback.
 This rather convoluted family tree has essentially transpired with 3 different logging frameworks in play, each with different characteristics.
-Log4j 1.x still has a very large legacy usage base in enterprise software therefore warrants addressing with its own custom appenders 
-and example configurations.
+Log4j 1.x still has a very large legacy usage base in enterprise software therefore warrants addressing with its own custom appenders and example configurations.
 
 ## Splunk Universal Forwarder vs Splunk Java Logging
 
@@ -48,7 +49,7 @@ semantic format.
 
 ## Resilience
 
-The HTTP REST and Raw TCP handler/appenders have autonomous socket reconnection logic in case of connection failures.
+The HTTP REST ,Raw TCP and HEC handler/appenders have autonomous socket reconnection logic in case of connection failures.
 There is also internal event queuing that is loosely modelled off Splunk's outputs.conf for Universal Forwarders.
 You can set these propertys :
 * maxQueueSize : defaults to 500KB , format [integer|integer[KB|MB|GB]]
@@ -86,7 +87,7 @@ Details can be found in the file LICENSE.
 
 ## Quick Start
 
-1.	Untar releases/splunklogging-1.0.tar.gz
+1.	Untar releases/splunklogging-1.3.tar.gz
 2.	All the required jar files are in the lib directory..
 3.	Assume you know how to setup your classpath to use your preferred logging framework implementation.
 4.	There is a simple code example here https://github.com/damiendallimore/SplunkJavaLogging/blob/master/src/com/splunk/logging/examples/Example.java
@@ -106,19 +107,6 @@ resources to your computer. For example, use the following command:
 
 >  git clone https://github.com/damiendallimore/SplunkJavaLogging.git
 
-## Resources
-
-Splunk Common Information Model
-
-* http://docs.splunk.com/Documentation/Splunk/latest/Knowledge/UnderstandandusetheCommonInformationModel
-
-Splunk Best Practice Logging Semantics
-
-* http://dev.splunk.com/view/logging-best-practices/SP-CAAADP6
-
-Splunk documentation
-
-* http://docs.splunk.com/Documentation/Splunk
 
 ## Contact
 
