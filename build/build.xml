@@ -126,6 +126,52 @@
 		<delete dir="${temp_build}" />
 
 	</target>
+	
+	<target name="build_log4j2" depends="compile"
+		description="generate a log4j2 only distribution">
+		<!-- Create the distribution directory -->
+
+
+		<copy todir="${temp_build}/${lib}">
+			<fileset dir="${lib}"
+				includes="splunk_tlsv12.jar,log4j-api-2.3.jar,log4j-core-2.3.jar,commons*.jar,http*.jar" />
+
+		</copy>
+
+
+
+		<copy todir="${temp_build}/${config}">
+			<fileset dir="${config}" includes="log4j2.xml" />
+		</copy>
+
+
+		<copy todir="${temp_build}/3rdparty_licenses">
+			<fileset dir="3rdparty_licenses" />
+		</copy>
+
+
+		<copy todir="${temp_build}">
+			<fileset file="LICENSE" />
+			<fileset file="README.md" />
+		</copy>
+
+
+		<jar jarfile="${temp_build}/${lib}/${id}-log4j2.jar">
+			<fileset dir="${temp_build}/${classes}"
+				includes="com/splunk/logging/*.class,com/splunk/logging/log4j2/**" />
+
+		</jar>
+
+		<delete dir="${temp_build}/${classes}" />
+
+		<tar destfile="${release}/${id}-log4j2-${version}${suffix}"
+			compression="${compressionType}">
+			<zipfileset dir="${temp_build}" prefix="${id}" />
+		</tar>
+
+		<delete dir="${temp_build}" />
+
+	</target>
 
 	<target name="build_logback" depends="compile"
 		description="generate a logback only distribution">
@@ -134,7 +180,7 @@
 
 		<copy todir="${temp_build}/${lib}">
 			<fileset dir="${lib}"
-				includes="splunk_tlsv12.jar,logback*.jar,commons-lang-2.4.jar" />
+				includes="splunk_tlsv12.jar,logback*.jar,commons*.jar,http*.jar" />
 
 		</copy>
 
@@ -179,7 +225,7 @@
 
 
 		<copy todir="${temp_build}/${lib}">
-			<fileset dir="${lib}" includes="splunk_tlsv12.jar" />
+			<fileset dir="${lib}" includes="splunk_tlsv12.jar,commons*.jar,http*.jar" />
 
 		</copy>
 

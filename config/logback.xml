@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--Example logback configuration using a Splunk REST Appender  or Splunk Raw TCP Appender -->
+<!--Example logback configuration using a Splunk HEC Appender, Splunk REST Appender  or Splunk Raw TCP Appender -->
 
 <configuration>
 
@@ -41,7 +41,7 @@
   </appender>
   
 <!--Send log events to a Splunk HEC Endpoint-->
-  <appender name="splunkrawtcp" class="com.splunk.logging.logback.appender.SplunkHECAppender">
+  <appender name="splunkhec" class="com.splunk.logging.logback.appender.SplunkHECAppender">
     <port>8088</port>
     <host>somehost</host>
     <token>YOUR TOKEN</token>
@@ -71,8 +71,7 @@
   
 <!--Splunk logger-->
   <logger name="splunk.logger" additivity="false" level="INFO">
-    <appender-ref ref="splunkrest"/>
-     <appender-ref ref="splunkrawtcp"/>
+     <appender-ref ref="splunkhec"/>
   </logger>
   
 <!--Root logger-->

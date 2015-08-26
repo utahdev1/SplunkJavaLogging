@@ -8,9 +8,9 @@ public class HECTransportConfig {
 	private boolean https = false;
 	private int poolsize = 1;
 
-	private String index;
+	private String index = "main";
 	private String source = "splunk_javalogging_hec";
-	private String sourcetype;
+	private String sourcetype = "splunk_javalogging_hec";
 
 	public HECTransportConfig() {
 	}

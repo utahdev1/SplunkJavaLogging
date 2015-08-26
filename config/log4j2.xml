@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--Example log4j2 configuration using a Splunk Raw TCP and UDP Appender -->
+<!--Example log4j2 configuration using a Splunk HEC, Raw TCP and UDP Appender -->
 
 
-<Configuration status="info" name="MySplunkApp" packages="">
+<Configuration status="info" name="MySplunkApp" packages="com.splunk.logging.log4j2.appender">
 
 	<Appenders>
 
+	    <SplunkHECAppender name="splunkhec" 
+	                       token="YOUR TOKEN" 
+	                       host="somehost" 
+	                       port="8088" 
+	                       https="false" 
+	                       poolsize="1" 
+	                       index="main" 
+	                       source="foo" 
+	                       sourcetype="bar" >
+	                       
+	        <PatternLayout pattern="%m%n" /> 
+	         
+	    </SplunkHECAppender> 
+	    
 		<Socket name="splunkrawtcp" protocol="TCP" host="ubuntu-splunk"
 			port="5151">
 			<PatternLayout pattern="%m%n" />
@@ -35,7 +49,8 @@
 			<AppenderRef ref="stdout" />
 		</Root>
 		<logger name="splunk.logger" additivity="false" level="INFO">
-			<appender-ref ref="splunkrawtcp" />
+			<appender-ref ref="splunkhec" />
+			<!-- <appender-ref ref="splunkrawtcp" /> -->
 			<!-- <appender-ref ref="splunkrawudp" /> -->
 			<!-- <appender-ref ref="failover_example" /> -->
 		</logger>

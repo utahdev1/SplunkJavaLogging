@@ -11,7 +11,6 @@ There are also custom handler/appender implementations and config examples for t
 
 This framework contains :
 
-*   Implementation of Splunk CIM(Common Information Model) and best practice logging semantics
 *   java.util.logging handler for logging to Splunk REST endpoints
 *   java.util.logging handler for logging to Splunk Raw TCP Server Socket
 *   java.util.logging handler for logging to Splunk HEC Endpoint
@@ -21,7 +20,9 @@ This framework contains :
 *   Logback appender for logging to Splunk REST endpoints
 *   Logback appender for logging to Splunk Raw TCP Server Socket
 *   Logback appender for logging to Splunk HEC Endpoint
-*   Example logging configuration files
+*   Log4j 2 appender for logging to Splunk HEC Endpoint
+*   Log4j 2 config examples for TCP and UDP logging
+*   Example logging configuration files for all the above
 *   Javadocs
 
 If you want to use UDP to send events to Splunk , then Log4j 1.x and Logback  already have Syslog Appenders.
