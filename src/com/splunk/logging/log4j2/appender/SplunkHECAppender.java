@@ -76,14 +76,14 @@ public final class SplunkHECAppender extends AbstractAppender {
 			@PluginAttribute("name") String name,
 			@PluginElement("Layout") Layout<? extends Serializable> layout,
 			@PluginElement("Filter") final Filter filter,
-			@PluginAttribute("otherAttribute") String token,
-			@PluginAttribute("otherAttribute") String host,
-			@PluginAttribute("otherAttribute") int port,
-			@PluginAttribute("otherAttribute") int poolsize,
-			@PluginAttribute("otherAttribute") boolean https,
-			@PluginAttribute("otherAttribute") String index,
-			@PluginAttribute("otherAttribute") String source,
-			@PluginAttribute("otherAttribute") String sourcetype) {
+			@PluginAttribute("token") String token,
+			@PluginAttribute("host") String host,
+			@PluginAttribute("port") int port,
+			@PluginAttribute("poolsize") int poolsize,
+			@PluginAttribute("https") boolean https,
+			@PluginAttribute("index") String index,
+			@PluginAttribute("source") String source,
+			@PluginAttribute("sourcetype") String sourcetype) {
 
 		if (name == null) {
 			LOGGER.error("No name provided for SplunkHECAppender");

@@ -36,9 +36,9 @@
 			<PatternLayout pattern="%m%n" />
 		</Console>
 
-		<Failover name="failover_example" primary="splunkrawtcp">
+		<Failover name="failover_example" primary="splunkhec">
 			<Failovers>
-				<AppenderRef ref="stdout" />
+				<AppenderRef ref="splunkrawtcp" />
 			</Failovers>
 		</Failover>
 
