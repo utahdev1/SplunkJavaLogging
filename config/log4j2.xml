@@ -8,39 +8,40 @@
 	<Appenders>
 
 	    <SplunkHECAppender name="splunkhec" 
-	                       token="YOUR TOKEN" 
-	                       host="somehost" 
+	                       token="4DBFC24E-19A2-4D31-9055-2139C818DBDD" 
+	                       host="localhost" 
 	                       port="8088" 
 	                       https="false" 
 	                       poolsize="1" 
 	                       index="main" 
-	                       source="foo" 
-	                       sourcetype="bar" >
+	                       source="log4j2" 
+	                       sourcetype="test-data" >
 	                       
-	        <PatternLayout pattern="%m%n" /> 
+	        <PatternLayout pattern="%m" /> 
 	         
 	    </SplunkHECAppender> 
 	    
-		<Socket name="splunkrawtcp" protocol="TCP" host="ubuntu-splunk"
+		<Socket name="splunkrawtcp" protocol="TCP" host="localhost"
 			port="5151">
 			<PatternLayout pattern="%m%n" />
 		</Socket>
 
-		<Socket name="splunkrawudp" protocol="UDP" host="ubuntu-splunk"
-			port="5152">
-			<PatternLayout pattern="%m%n" />
-		</Socket>
-
-
+        <Socket name="splunkrawudp" protocol="UDP" host="localhost"
+            port="5152">
+            <PatternLayout pattern="%m%n" />
+        </Socket>
+        
+        <Failover name="failover_example" primary="splunkhec">
+            <Failovers>
+                <AppenderRef ref="splunkrawtcp" />
+            </Failovers>
+        </Failover>
+        
 		<Console name="stdout" target="SYSTEM_OUT">
 			<PatternLayout pattern="%m%n" />
 		</Console>
 
-		<Failover name="failover_example" primary="splunkhec">
-			<Failovers>
-				<AppenderRef ref="splunkrawtcp" />
-			</Failovers>
-		</Failover>
+		
 
 	</Appenders>
 

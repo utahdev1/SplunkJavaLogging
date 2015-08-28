@@ -52,6 +52,7 @@ public final class SplunkHECAppender extends AbstractAppender {
 					shi.setDropEventsOnQueueFull(dropEventsOnQueueFull);
 				}
 			} catch (Exception e) {
+				
 				throw new AppenderLoggingException(
 						"Couldn't establish connection for SplunkHECAppender named \""
 								+ this.getName() + "\".");
@@ -63,6 +64,7 @@ public final class SplunkHECAppender extends AbstractAppender {
 			shi.streamEvent(formatted);
 
 		} catch (Exception ex) {
+			
 			if (!ignoreExceptions()) {
 				throw new AppenderLoggingException(ex);
 			}
@@ -106,7 +108,7 @@ public final class SplunkHECAppender extends AbstractAppender {
 		config.setPoolsize(poolsize);
 		config.setHttps(https);
 		config.setIndex(index);
-		config.setSource(sourcetype);
+		config.setSource(source);
 		config.setSourcetype(sourcetype);
 
 		return new SplunkHECAppender(name, config, filter, layout, true);

@@ -1,8 +1,10 @@
 package com.splunk.logging;
 
 import java.net.URI;
+import java.util.concurrent.Future;
 
 import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.conn.routing.HttpRoute;
@@ -13,6 +15,7 @@ import org.apache.http.impl.nio.client.HttpAsyncClients;
 import org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager;
 import org.apache.http.impl.nio.reactor.DefaultConnectingIOReactor;
 import org.apache.http.nio.reactor.ConnectingIOReactor;
+import org.apache.http.util.EntityUtils;
 
 /**
  * Common HEC logic shared by all appenders/handlers
@@ -48,7 +51,6 @@ public class SplunkHECInput extends SplunkInput {
 				.setPath("/services/collector").build();
 
 		openStream();
-
 	}
 
 	/**
@@ -84,6 +86,7 @@ public class SplunkHECInput extends SplunkInput {
 	 */
 	public void streamEvent(String message) {
 
+		
 		String currentMessage = message;
 		try {
 
@@ -103,15 +106,18 @@ public class SplunkHECInput extends SplunkInput {
 
 			HttpPost post = new HttpPost(uri);
 			post.addHeader("Authorization", "Splunk " + config.getToken());
-
+			
 			StringEntity requestEntity = new StringEntity(json.toString(),
 					ContentType.create("application/json", "UTF-8"));
 
 			post.setEntity(requestEntity);
-			httpClient.execute(post, null);
+			Future<HttpResponse> future = httpClient.execute(post, null);
+			HttpResponse response = future.get();
+            //System.out.println(response.getStatusLine());
+            //System.out.println(EntityUtils.toString(response.getEntity()));
 
 		} catch (Exception e) {
-
+			
 			// something went wrong , put message on the queue for retry
 			enqueue(currentMessage);
 			try {

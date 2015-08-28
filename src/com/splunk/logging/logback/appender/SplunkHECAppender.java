@@ -53,6 +53,7 @@ public class SplunkHECAppender extends AppenderBase<ILoggingEvent> {
 	@Override
 	public void start() {
 
+		
 		if (this.layout == null) {
 			addError("No layout set for the appender named [" + name + "].");
 			return;

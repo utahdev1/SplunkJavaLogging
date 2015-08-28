@@ -7,11 +7,11 @@
 <!--Send log events to  a Splunk REST endpoint-->
   <appender name="splunkrest" class="com.splunk.logging.logback.appender.SplunkRestAppender">
     <port>8089</port>
-    <host>ubuntu-splunk</host>
+    <host>localhost</host>
     <delivery>stream</delivery>
     <user>admin</user>
     <metaSourcetype>testing</metaSourcetype>
-    <pass>sawasdee</pass>
+    <pass>foo</pass>
     <maxQueueSize>5MB</maxQueueSize>
     <dropEventsOnQueueFull>false</dropEventsOnQueueFull>
     <metaSource>rest</metaSource>
@@ -43,17 +43,17 @@
 <!--Send log events to a Splunk HEC Endpoint-->
   <appender name="splunkhec" class="com.splunk.logging.logback.appender.SplunkHECAppender">
     <port>8088</port>
-    <host>somehost</host>
-    <token>YOUR TOKEN</token>
+    <host>localhost</host>
+    <token>4DBFC24E-19A2-4D31-9055-2139C818DBDD</token>
     <https>false</https>
     <poolsize>1</poolsize>
     <index>main</index>
-    <source>foo</source>
-    <sourcetype>bar</sourcetype>
+    <source>logback</source>
+    <sourcetype>test-data</sourcetype>
     <maxQueueSize>5MB</maxQueueSize>
     <dropEventsOnQueueFull>false</dropEventsOnQueueFull>
     <layout class="ch.qos.logback.classic.PatternLayout">
-      <pattern>%m%n</pattern>
+      <pattern>%m</pattern>
       <!-- optionally you can enrich the messages with formatting tokens from the logging framework
       <pattern>%d %m%n</pattern>
       <pattern>%m loglevel="%p"%n</pattern>
