@@ -12,10 +12,16 @@
 	                       host="localhost" 
 	                       port="8088" 
 	                       https="false" 
-	                       poolsize="1" 
+	                       poolsize="5" 
 	                       index="main" 
 	                       source="log4j2" 
-	                       sourcetype="test-data" >
+	                       sourcetype="test-data" 
+	                       maxQueueSize="5MB"
+	                       dropEventsOnQueueFull="false"
+	                       batchMode="true"
+	                       maxBatchSizeBytes="1MB"
+	                       maxBatchSizeEvents="5"
+	                       maxInactiveTimeBeforeBatchFlush="500">
 	                       
 	        <PatternLayout pattern="%m" /> 
 	         
@@ -31,12 +37,14 @@
             <PatternLayout pattern="%m%n" />
         </Socket>
         
+        <!-- 
         <Failover name="failover_example" primary="splunkhec">
             <Failovers>
                 <AppenderRef ref="splunkrawtcp" />
             </Failovers>
         </Failover>
-        
+         -->
+         
 		<Console name="stdout" target="SYSTEM_OUT">
 			<PatternLayout pattern="%m%n" />
 		</Console>
@@ -51,9 +59,9 @@
 		</Root>
 		<logger name="splunk.logger" additivity="false" level="INFO">
 			<appender-ref ref="splunkhec" />
-			<!-- <appender-ref ref="splunkrawtcp" /> -->
+			<!-- <appender-ref ref="splunkrawtcp" />-->
 			<!-- <appender-ref ref="splunkrawudp" /> -->
-			<!-- <appender-ref ref="failover_example" /> -->
+			<!-- <appender-ref ref="failover_example" />-->
 		</logger>
 	</Loggers>
 

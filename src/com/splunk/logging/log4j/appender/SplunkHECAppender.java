@@ -167,7 +167,6 @@ public class SplunkHECAppender extends AppenderSkeleton {
 	public void setSourcetype(String sourcetype) {
 		config.setSourcetype(sourcetype);
 	}
-	
 
 	public String getMaxQueueSize() {
 		return maxQueueSize;
@@ -183,6 +182,39 @@ public class SplunkHECAppender extends AppenderSkeleton {
 
 	public void setDropEventsOnQueueFull(boolean dropEventsOnQueueFull) {
 		this.dropEventsOnQueueFull = dropEventsOnQueueFull;
+	}
+
+	public long getMaxBatchSizeEvents() {
+		return config.getMaxBatchSizeEvents();
+	}
+
+	public void setMaxBatchSizeEvents(long maxBatchSizeEvents) {
+		config.setMaxBatchSizeEvents(maxBatchSizeEvents);
+	}
+
+	public long getMaxInactiveTimeBeforeBatchFlush() {
+		return config.getMaxInactiveTimeBeforeBatchFlush();
+	}
+
+	public void setMaxInactiveTimeBeforeBatchFlush(
+			long maxInactiveTimeBeforeBatchFlush) {
+		config.setMaxInactiveTimeBeforeBatchFlush(maxInactiveTimeBeforeBatchFlush);
+	}
+
+	public boolean isBatchMode() {
+		return config.isBatchMode();
+	}
+
+	public void setBatchMode(boolean batchMode) {
+		config.setBatchMode(batchMode);
+	}
+
+	public String getMaxBatchSizeBytes() {
+		return String.valueOf(config.getMaxBatchSizeBytes());
+	}
+
+	public void setMaxBatchSizeBytes(String maxBatchSizeBytes) {
+		config.setMaxBatchSizeBytes(maxBatchSizeBytes);
 	}
 
 }

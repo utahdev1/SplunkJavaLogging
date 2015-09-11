@@ -62,6 +62,15 @@ public class SplunkHECHandler extends Handler {
 		config.setSource(manager.getProperty(cname + ".source"));
 		config.setSourcetype(manager.getProperty(cname + ".sourcetype"));
 
+		config.setBatchMode(Boolean.parseBoolean(manager.getProperty(cname
+				+ ".batchMode")));
+		config.setMaxBatchSizeBytes(manager.getProperty(cname
+				+ ".maxBatchSizeBytes"));
+		config.setMaxBatchSizeEvents(Long.parseLong(manager.getProperty(cname
+				+ ".maxBatchSizeEvents")));
+		config.setMaxInactiveTimeBeforeBatchFlush(Long.parseLong(manager
+				.getProperty(cname + ".maxInactiveTimeBeforeBatchFlush")));
+
 		setMaxQueueSize(manager.getProperty(cname + ".maxQueueSize"));
 		setDropEventsOnQueueFull(Boolean.parseBoolean(manager.getProperty(cname
 				+ ".dropEventsOnQueueFull")));

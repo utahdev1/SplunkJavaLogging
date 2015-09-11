@@ -52,6 +52,10 @@
     <sourcetype>test-data</sourcetype>
     <maxQueueSize>5MB</maxQueueSize>
     <dropEventsOnQueueFull>false</dropEventsOnQueueFull>
+    <batchMode>true</batchMode>
+    <maxBatchSizeBytes>1MB</maxBatchSizeBytes>
+    <maxBatchSizeEvents>5</maxBatchSizeEvents>
+    <maxInactiveTimeBeforeBatchFlush>5000</maxInactiveTimeBeforeBatchFlush>
     <layout class="ch.qos.logback.classic.PatternLayout">
       <pattern>%m</pattern>
       <!-- optionally you can enrich the messages with formatting tokens from the logging framework

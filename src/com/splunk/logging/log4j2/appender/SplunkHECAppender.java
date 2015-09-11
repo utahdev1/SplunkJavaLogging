@@ -28,7 +28,8 @@ public final class SplunkHECAppender extends AbstractAppender {
 	private SplunkHECInput shi;
 
 	protected SplunkHECAppender(String name, HECTransportConfig config,
-			Filter filter, Layout<? extends Serializable> layout,
+			boolean dropEventsOnQueueFull, String maxQueueSize, Filter filter,
+			Layout<? extends Serializable> layout,
 			final boolean ignoreExceptions) {
 		super(name, filter, layout, ignoreExceptions);
 		this.config = config;
@@ -52,7 +53,7 @@ public final class SplunkHECAppender extends AbstractAppender {
 					shi.setDropEventsOnQueueFull(dropEventsOnQueueFull);
 				}
 			} catch (Exception e) {
-				
+
 				throw new AppenderLoggingException(
 						"Couldn't establish connection for SplunkHECAppender named \""
 								+ this.getName() + "\".");
@@ -64,7 +65,7 @@ public final class SplunkHECAppender extends AbstractAppender {
 			shi.streamEvent(formatted);
 
 		} catch (Exception ex) {
-			
+
 			if (!ignoreExceptions()) {
 				throw new AppenderLoggingException(ex);
 			}
@@ -85,7 +86,13 @@ public final class SplunkHECAppender extends AbstractAppender {
 			@PluginAttribute("https") boolean https,
 			@PluginAttribute("index") String index,
 			@PluginAttribute("source") String source,
-			@PluginAttribute("sourcetype") String sourcetype) {
+			@PluginAttribute("sourcetype") String sourcetype,
+			@PluginAttribute("maxQueueSize") String maxQueueSize,
+			@PluginAttribute("dropEventsOnQueueFull") boolean dropEventsOnQueueFull,
+			@PluginAttribute("batchMode") boolean batchMode,
+			@PluginAttribute("maxBatchSizeBytes") String maxBatchSizeBytes,
+			@PluginAttribute("maxBatchSizeEvents") long maxBatchSizeEvents,
+			@PluginAttribute("maxInactiveTimeBeforeBatchFlush") long maxInactiveTimeBeforeBatchFlush) {
 
 		if (name == null) {
 			LOGGER.error("No name provided for SplunkHECAppender");
@@ -111,6 +118,12 @@ public final class SplunkHECAppender extends AbstractAppender {
 		config.setSource(source);
 		config.setSourcetype(sourcetype);
 
-		return new SplunkHECAppender(name, config, filter, layout, true);
+		config.setBatchMode(batchMode);
+		config.setMaxBatchSizeBytes(maxBatchSizeBytes);
+		config.setMaxBatchSizeEvents(maxBatchSizeEvents);
+		config.setMaxInactiveTimeBeforeBatchFlush(maxInactiveTimeBeforeBatchFlush);
+
+		return new SplunkHECAppender(name, config, dropEventsOnQueueFull,
+				maxQueueSize, filter, layout, true);
 	}
 }
