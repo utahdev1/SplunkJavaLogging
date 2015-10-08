@@ -1,5 +1,11 @@
 # Splunk Java Logging Framework
 
+
+# IMPORTANT NOTE :
+
+Although this framework is fully functional and stable, since it was released Splunk have now created their own Java Logging Library.
+So I recommend that you use the formally Splunk developed and supported offering that can be found here : http://dev.splunk.com/view/splunk-logging-java/SP-CAAAE2K 
+
 The purpose of this project is to create a logging framework to allow developers to as seamlessly as possible
 integrate Splunk best practice logging semantics into their code and easily send their log events to Splunk.
 There are also custom handler/appender implementations and config examples for the most prevalent Java logging frameworks in play.
