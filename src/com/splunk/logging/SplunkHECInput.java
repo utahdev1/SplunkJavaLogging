@@ -182,6 +182,29 @@ public class SplunkHECInput extends SplunkInput {
 	}
 
 	/**
+	 * from Tivo
+	 * 
+	 * @param message
+	 * @return
+	 */
+	private String escapeMessageIfNeeded(String message) {
+		String trimmedMessage = message.trim();
+		if (trimmedMessage.startsWith("{") && trimmedMessage.endsWith("}")) {
+			// this is *probably* JSON.
+			return trimmedMessage;
+		} else if (trimmedMessage.startsWith("\"")
+				&& trimmedMessage.endsWith("\"")
+				&& !message.substring(1, message.length() - 1).contains("\"")) {
+			// this appears to be a quoted string with no internal quotes
+			return trimmedMessage;
+		} else {
+			// don't know what this thing is, so need to escape all quotes, and
+			// then wrap the result in quotes
+			return "\"" + message.replace("\"", "\\\"") + "\"";
+		}
+	}
+	
+	/**
 	 * send an event via stream
 	 * 
 	 * @param message
@@ -191,9 +214,7 @@ public class SplunkHECInput extends SplunkInput {
 		String currentMessage = "";
 		try {
 
-			if (!(message.startsWith("{") && message.endsWith("}"))
-					&& !(message.startsWith("\"") && message.endsWith("\"")))
-				message = wrapMessageInQuotes(message);
+			message = escapeMessageIfNeeded(message);
 
 			// could use a JSON Object , but the JSON is so trivial , just
 			// building it with a StringBuffer
