@@ -86,7 +86,7 @@ Log4j and Logback are thread safe.
 
 ## License
 
-The Splunk Java Logging Framework is licensed under the Creative Commons 3.0 License. 
+The Splunk Java Logging Framework is licensed under the Apache 2.0 License. 
 Details can be found in the file LICENSE.
 
 ## Quick Start
