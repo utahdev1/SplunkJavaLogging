@@ -26,6 +26,8 @@ public class SplunkHECAppender extends AppenderBase<ILoggingEvent> {
 
 	private Layout<ILoggingEvent> layout;
 
+	private String activationKey;
+
 	/**
 	 * Constructor
 	 */
@@ -60,12 +62,11 @@ public class SplunkHECAppender extends AppenderBase<ILoggingEvent> {
 
 		if (shi == null) {
 			try {
-				shi = new SplunkHECInput(config);
+				shi = new SplunkHECInput(config, this.activationKey);
 				shi.setMaxQueueSize(maxQueueSize);
 				shi.setDropEventsOnQueueFull(dropEventsOnQueueFull);
 			} catch (Exception e) {
-				addError("Couldn't establish connection for SplunkHECAppender named \""
-						+ this.name + "\".");
+				addError("Couldn't establish connection for SplunkHECAppender named \"" + this.name + "\".");
 			}
 		}
 		super.start();
@@ -164,8 +165,7 @@ public class SplunkHECAppender extends AppenderBase<ILoggingEvent> {
 		return config.getMaxInactiveTimeBeforeBatchFlush();
 	}
 
-	public void setMaxInactiveTimeBeforeBatchFlush(
-			long maxInactiveTimeBeforeBatchFlush) {
+	public void setMaxInactiveTimeBeforeBatchFlush(long maxInactiveTimeBeforeBatchFlush) {
 		config.setMaxInactiveTimeBeforeBatchFlush(maxInactiveTimeBeforeBatchFlush);
 	}
 
@@ -177,7 +177,6 @@ public class SplunkHECAppender extends AppenderBase<ILoggingEvent> {
 		config.setBatchMode(batchMode);
 	}
 
-	
 	public String getMaxBatchSizeBytes() {
 		return String.valueOf(config.getMaxBatchSizeBytes());
 	}
@@ -208,6 +207,14 @@ public class SplunkHECAppender extends AppenderBase<ILoggingEvent> {
 
 	public void setLayout(Layout<ILoggingEvent> layout) {
 		this.layout = layout;
+	}
+
+	public String getActivationKey() {
+		return this.activationKey;
+	}
+
+	public void setActivationKey(String activationKey) {
+		this.activationKey = activationKey;
 	}
 
 }

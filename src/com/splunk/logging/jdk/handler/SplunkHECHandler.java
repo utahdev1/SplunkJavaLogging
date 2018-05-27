@@ -25,6 +25,8 @@ public class SplunkHECHandler extends Handler {
 
 	private SplunkHECInput shi;
 
+	private String activationKey;
+
 	/**
 	 * Constructor
 	 */
@@ -34,7 +36,7 @@ public class SplunkHECHandler extends Handler {
 
 		try {
 
-			shi = new SplunkHECInput(config);
+			shi = new SplunkHECInput(config, this.activationKey);
 			shi.setMaxQueueSize(maxQueueSize);
 			shi.setDropEventsOnQueueFull(dropEventsOnQueueFull);
 		} catch (Exception e) {
@@ -51,29 +53,24 @@ public class SplunkHECHandler extends Handler {
 		LogManager manager = LogManager.getLogManager();
 		String cname = getClass().getName();
 
+		this.activationKey = manager.getProperty(cname + ".activationKey");
 		config.setHost(manager.getProperty(cname + ".host"));
 		config.setPort(Integer.parseInt(manager.getProperty(cname + ".port")));
-		config.setPoolsize(Integer.parseInt(manager.getProperty(cname
-				+ ".poolsize")));
-		config.setHttps(Boolean.parseBoolean(manager.getProperty(cname
-				+ ".https")));
+		config.setPoolsize(Integer.parseInt(manager.getProperty(cname + ".poolsize")));
+		config.setHttps(Boolean.parseBoolean(manager.getProperty(cname + ".https")));
 		config.setToken(manager.getProperty(cname + ".token"));
 		config.setIndex(manager.getProperty(cname + ".index"));
 		config.setSource(manager.getProperty(cname + ".source"));
 		config.setSourcetype(manager.getProperty(cname + ".sourcetype"));
 
-		config.setBatchMode(Boolean.parseBoolean(manager.getProperty(cname
-				+ ".batchMode")));
-		config.setMaxBatchSizeBytes(manager.getProperty(cname
-				+ ".maxBatchSizeBytes"));
-		config.setMaxBatchSizeEvents(Long.parseLong(manager.getProperty(cname
-				+ ".maxBatchSizeEvents")));
-		config.setMaxInactiveTimeBeforeBatchFlush(Long.parseLong(manager
-				.getProperty(cname + ".maxInactiveTimeBeforeBatchFlush")));
+		config.setBatchMode(Boolean.parseBoolean(manager.getProperty(cname + ".batchMode")));
+		config.setMaxBatchSizeBytes(manager.getProperty(cname + ".maxBatchSizeBytes"));
+		config.setMaxBatchSizeEvents(Long.parseLong(manager.getProperty(cname + ".maxBatchSizeEvents")));
+		config.setMaxInactiveTimeBeforeBatchFlush(
+				Long.parseLong(manager.getProperty(cname + ".maxInactiveTimeBeforeBatchFlush")));
 
 		setMaxQueueSize(manager.getProperty(cname + ".maxQueueSize"));
-		setDropEventsOnQueueFull(Boolean.parseBoolean(manager.getProperty(cname
-				+ ".dropEventsOnQueueFull")));
+		setDropEventsOnQueueFull(Boolean.parseBoolean(manager.getProperty(cname + ".dropEventsOnQueueFull")));
 		setLevel(Level.parse(manager.getProperty(cname + ".level")));
 		setFilter(null);
 		setFormatter(new SplunkFormatter());
@@ -140,6 +137,14 @@ public class SplunkHECHandler extends Handler {
 
 	public void setDropEventsOnQueueFull(boolean dropEventsOnQueueFull) {
 		this.dropEventsOnQueueFull = dropEventsOnQueueFull;
+	}
+
+	public String getActivationKey() {
+		return this.activationKey;
+	}
+
+	public void setActivationKey(String activationKey) {
+		this.activationKey = activationKey;
 	}
 
 	@Override

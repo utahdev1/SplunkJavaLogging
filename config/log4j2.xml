@@ -7,7 +7,11 @@
 
 	<Appenders>
 
+        <!--
+          # Visit http://www.baboonbones.com/#activation to obtain a free,non-expiring activation key
+        -->
 	    <SplunkHECAppender name="splunkhec" 
+	                       activationKey="YOURKEY"
 	                       token="4DBFC24E-19A2-4D31-9055-2139C818DBDD" 
 	                       host="localhost" 
 	                       port="8088" 

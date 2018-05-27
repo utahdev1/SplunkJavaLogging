@@ -46,8 +46,7 @@ public class RestEventData {
 	 *            A regular expression used to extract the host value from each
 	 *            event.
 	 */
-	public RestEventData(String source, String sourcetype, String index,
-			String host, String hostRegex) {
+	public RestEventData(String source, String sourcetype, String index, String host, String hostRegex) {
 		this.source = source;
 		this.sourcetype = sourcetype;
 		this.index = index;

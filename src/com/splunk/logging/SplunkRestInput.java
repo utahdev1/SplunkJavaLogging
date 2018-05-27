@@ -53,19 +53,23 @@ public class SplunkRestInput extends SplunkInput {
 	 *            true=stream , false=do not stream (be aware, poor performance)
 	 * @throws Exception
 	 */
-	public SplunkRestInput(String user, String pass, String host, int port,
-			RestEventData red, boolean stream) throws Exception {
+	public SplunkRestInput(String user, String pass, String host, int port, RestEventData red, boolean stream,
+			String activationKey) throws Exception {
 
-		this.host = host;
-		this.port = port;
-		this.user = user;
-		this.pass = pass;
-		this.args = createArgs(red);
+		activationKeyCheck(activationKey);
 
-		initService();
+		if (activated) {
+			this.host = host;
+			this.port = port;
+			this.user = user;
+			this.pass = pass;
+			this.args = createArgs(red);
 
-		if (stream) {
-			openStream();
+			initService();
+
+			if (stream) {
+				openStream();
+			}
 		}
 
 	}
@@ -107,20 +111,15 @@ public class SplunkRestInput extends SplunkInput {
 
 		if (red != null) {
 			if (red.getIndex().length() > 0)
-				urlArgs.add(RestEventData.RECEIVERS_SIMPLE_ARG_INDEX,
-						red.getIndex());
+				urlArgs.add(RestEventData.RECEIVERS_SIMPLE_ARG_INDEX, red.getIndex());
 			if (red.getSource().length() > 0)
-				urlArgs.add(RestEventData.RECEIVERS_SIMPLE_ARG_SOURCE,
-						red.getSource());
+				urlArgs.add(RestEventData.RECEIVERS_SIMPLE_ARG_SOURCE, red.getSource());
 			if (red.getSourcetype().length() > 0)
-				urlArgs.add(RestEventData.RECEIVERS_SIMPLE_ARG_SOURCETYPE,
-						red.getSourcetype());
+				urlArgs.add(RestEventData.RECEIVERS_SIMPLE_ARG_SOURCETYPE, red.getSourcetype());
 			if (red.getHost().length() > 0)
-				urlArgs.add(RestEventData.RECEIVERS_SIMPLE_ARG_HOST,
-						red.getHost());
+				urlArgs.add(RestEventData.RECEIVERS_SIMPLE_ARG_HOST, red.getHost());
 			if (red.getHostRegex().length() > 0)
-				urlArgs.add(RestEventData.RECEIVERS_SIMPLE_ARG_HOSTREGEX,
-						red.getHostRegex());
+				urlArgs.add(RestEventData.RECEIVERS_SIMPLE_ARG_HOSTREGEX, red.getHostRegex());
 
 		}
 		return urlArgs;
@@ -149,22 +148,24 @@ public class SplunkRestInput extends SplunkInput {
 	 */
 	public void sendEvent(String message) {
 
-		String currentMessage = message;
+		if (activated) {
+			String currentMessage = message;
 
-		try {
-			if (streamSocket == null) {
-				this.receivers.log(args, currentMessage);
-
-				// flush the queue
-				while (queueContainsEvents()) {
-					String messageOffQueue = dequeue();
-					currentMessage = messageOffQueue;
+			try {
+				if (streamSocket == null) {
 					this.receivers.log(args, currentMessage);
+
+					// flush the queue
+					while (queueContainsEvents()) {
+						String messageOffQueue = dequeue();
+						currentMessage = messageOffQueue;
+						this.receivers.log(args, currentMessage);
+					}
 				}
+			} catch (Exception e) {
+				// something went wrong , put message on the queue for retry
+				enqueue(currentMessage);
 			}
-		} catch (Exception e) {
-			// something went wrong , put message on the queue for retry
-			enqueue(currentMessage);
 		}
 	}
 
@@ -175,37 +176,39 @@ public class SplunkRestInput extends SplunkInput {
 	 */
 	public void streamEvent(String message) {
 
-		String currentMessage = message;
-		try {
+		if (activated) {
+			String currentMessage = message;
+			try {
 
-			if (writerOut != null) {
+				if (writerOut != null) {
 
-				// send the message
-				writerOut.write(currentMessage + "\n");
-
-				// flush the queue
-				while (queueContainsEvents()) {
-					String messageOffQueue = dequeue();
-					currentMessage = messageOffQueue;
+					// send the message
 					writerOut.write(currentMessage + "\n");
+
+					// flush the queue
+					while (queueContainsEvents()) {
+						String messageOffQueue = dequeue();
+						currentMessage = messageOffQueue;
+						writerOut.write(currentMessage + "\n");
+					}
+					writerOut.flush();
 				}
-				writerOut.flush();
-			}
 
-		} catch (IOException e) {
+			} catch (IOException e) {
 
-			// something went wrong , put message on the queue for retry
-			enqueue(currentMessage);
+				// something went wrong , put message on the queue for retry
+				enqueue(currentMessage);
 
-			try {
-				closeStream();
-			} catch (Exception e1) {
-			}
+				try {
+					closeStream();
+				} catch (Exception e1) {
+				}
 
-			try {
-				initService();
-				openStream();
-			} catch (Exception e2) {
+				try {
+					initService();
+					openStream();
+				} catch (Exception e2) {
+				}
 			}
 		}
 	}

@@ -40,6 +40,8 @@ public class SplunkRestHandler extends Handler {
 	private SplunkRestInput sri;
 	private RestEventData red = new RestEventData();
 
+	private String activationKey;
+
 	/**
 	 * Constructor
 	 */
@@ -49,9 +51,8 @@ public class SplunkRestHandler extends Handler {
 
 		try {
 
-			sri = new SplunkRestInput(this.user, this.pass, this.host,
-					this.port, this.red, this.delivery.equals(STREAM) ? true
-							: false);
+			sri = new SplunkRestInput(this.user, this.pass, this.host, this.port, this.red,
+					this.delivery.equals(STREAM) ? true : false, activationKey);
 			sri.setMaxQueueSize(maxQueueSize);
 			sri.setDropEventsOnQueueFull(dropEventsOnQueueFull);
 		} catch (Exception e) {
@@ -68,6 +69,7 @@ public class SplunkRestHandler extends Handler {
 		LogManager manager = LogManager.getLogManager();
 		String cname = getClass().getName();
 
+		this.activationKey = manager.getProperty(cname + ".activationKey");
 		setUser(manager.getProperty(cname + ".user"));
 		setPass(manager.getProperty(cname + ".pass"));
 		setHost(manager.getProperty(cname + ".host"));
@@ -82,8 +84,7 @@ public class SplunkRestHandler extends Handler {
 		setMetaSourcetype(manager.getProperty(cname + ".metaSourcetype"));
 
 		setMaxQueueSize(manager.getProperty(cname + ".maxQueueSize"));
-		setDropEventsOnQueueFull(Boolean.parseBoolean(manager.getProperty(cname
-				+ ".dropEventsOnQueueFull")));
+		setDropEventsOnQueueFull(Boolean.parseBoolean(manager.getProperty(cname + ".dropEventsOnQueueFull")));
 
 		setLevel(Level.parse(manager.getProperty(cname + ".level")));
 		setFilter(null);
@@ -256,6 +257,14 @@ public class SplunkRestHandler extends Handler {
 
 	public void setDropEventsOnQueueFull(boolean dropEventsOnQueueFull) {
 		this.dropEventsOnQueueFull = dropEventsOnQueueFull;
+	}
+
+	public String getActivationKey() {
+		return this.activationKey;
+	}
+
+	public void setActivationKey(String activationKey) {
+		this.activationKey = activationKey;
 	}
 
 	@Override

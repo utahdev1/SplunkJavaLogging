@@ -26,6 +26,8 @@ public class SplunkRawTCPAppender extends AppenderBase<ILoggingEvent> {
 
 	private Layout<ILoggingEvent> layout;
 
+	private String activationKey;
+
 	/**
 	 * Constructor
 	 */
@@ -60,12 +62,11 @@ public class SplunkRawTCPAppender extends AppenderBase<ILoggingEvent> {
 
 		if (sri == null) {
 			try {
-				sri = new SplunkRawTCPInput(host, port);
+				sri = new SplunkRawTCPInput(host, port, this.activationKey);
 				sri.setMaxQueueSize(maxQueueSize);
 				sri.setDropEventsOnQueueFull(dropEventsOnQueueFull);
 			} catch (Exception e) {
-				addError("Couldn't establish Raw TCP connection for SplunkRawTCPAppender named \""
-						+ this.name + "\".");
+				addError("Couldn't establish Raw TCP connection for SplunkRawTCPAppender named \"" + this.name + "\".");
 			}
 		}
 		super.start();
@@ -126,6 +127,14 @@ public class SplunkRawTCPAppender extends AppenderBase<ILoggingEvent> {
 
 	public void setLayout(Layout<ILoggingEvent> layout) {
 		this.layout = layout;
+	}
+
+	public String getActivationKey() {
+		return this.activationKey;
+	}
+
+	public void setActivationKey(String activationKey) {
+		this.activationKey = activationKey;
 	}
 
 }

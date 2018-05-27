@@ -25,8 +25,7 @@ public class Example {
 		logger.debug("REST for the wicked");
 
 		// create a SplunkLogEvent
-		SplunkLogEvent event = new SplunkLogEvent("Failed Login",
-				"sshd:failure");
+		SplunkLogEvent event = new SplunkLogEvent("Failed Login", "sshd:failure");
 
 		// add CIM fields either using setter methods or static variables
 

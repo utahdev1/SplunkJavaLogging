@@ -1,10 +1,8 @@
-# Splunk Java Logging Framework
+# Splunk Java Logging Framework v1.4
 
+## Activation Key
 
-# IMPORTANT NOTE :
-
-Although this framework is fully functional and stable, since it was released Splunk have now created their own Java Logging Library.
-So I recommend that you use the formally Splunk developed and supported offering that can be found here : http://dev.splunk.com/view/splunk-logging-java/SP-CAAAE2K 
+You require an activation key to use these libraries. Visit http://www.baboonbones.com/#activation to obtain a free,non-expiring key
 
 ## Overview
 
@@ -96,7 +94,7 @@ Details can be found in the file LICENSE.
 
 ## Quick Start
 
-1.	Untar releases/splunklogging-1.3.tar.gz
+1.	Untar releases/splunklogging-1.4.tar.gz
 2.	All the required jar files are in the lib directory..
 3.	Assume you know how to setup your classpath to use your preferred logging framework implementation.
 4.	There is a simple code example here https://github.com/damiendallimore/SplunkJavaLogging/blob/master/src/com/splunk/logging/examples/Example.java
@@ -124,7 +122,7 @@ This project was initiated by Damien Dallimore
 
 <tr>
 <td><em>Email</em></td>
-<td>ddallimore@splunk.com</td>
+<td>damien@baboonbones.com</td>
 </tr>
 
 <tr>

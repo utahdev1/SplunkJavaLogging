@@ -26,12 +26,11 @@ import org.apache.commons.lang.time.FastDateFormat;
  * 
  * </pre>
  * 
- * @see <a
- *      href="http://docs.splunk.com/Documentation/Splunk/latest/Knowledge/UnderstandandusetheCommonInformationModel">Splunk
- *      CIM</a>
- * @see <a
- *      href="http://dev.splunk.com/view/logging-best-practices/SP-CAAADP6">Splunk
- *      Logging Best Practices</a>
+ * @see <a href=
+ *      "http://docs.splunk.com/Documentation/Splunk/latest/Knowledge/UnderstandandusetheCommonInformationModel">
+ *      Splunk CIM</a>
+ * @see <a href="http://dev.splunk.com/view/logging-best-practices/SP-CAAADP6">
+ *      Splunk Logging Best Practices</a>
  * 
  * 
  * @author Damien Dallimore damien@dtdsoftware.com
@@ -73,8 +72,7 @@ public class SplunkLogEvent {
 	/**
 	 * Date Formatter instance
 	 */
-	private static FastDateFormat DATEFORMATTER = FastDateFormat
-			.getInstance(DATEFORMATPATTERN);
+	private static FastDateFormat DATEFORMATTER = FastDateFormat.getInstance(DATEFORMATPATTERN);
 
 	/**
 	 * Event prefix fields
@@ -382,9 +380,9 @@ public class SplunkLogEvent {
 	/**
 	 * The DNS resource record type.
 	 * 
-	 * @see <a
-	 *      href="https://secure.wikimedia.org/wikipedia/en/wiki/List_of_DNS_record_types">see
-	 *      this Wikipedia article on DNS record types</a>
+	 * @see <a href=
+	 *      "https://secure.wikimedia.org/wikipedia/en/wiki/List_of_DNS_record_types">
+	 *      see this Wikipedia article on DNS record types</a>
 	 */
 	public static String DNS_RECORD_TYPE = "record_type";
 	/**
@@ -1205,8 +1203,7 @@ public class SplunkLogEvent {
 	 * @param quoteValues
 	 *            Whether or not to put quotes around values
 	 */
-	public SplunkLogEvent(String eventName, String eventID,
-			boolean useInternalDate, boolean quoteValues) {
+	public SplunkLogEvent(String eventName, String eventID, boolean useInternalDate, boolean quoteValues) {
 
 		this.eventMessage = new StringBuffer();
 		this.quoteValues = quoteValues;
@@ -1374,11 +1371,9 @@ public class SplunkLogEvent {
 	public void addPair(String key, String value) {
 
 		if (quoteValues)
-			this.eventMessage.append(key).append(KVDELIM).append(QUOTE)
-					.append(value).append(QUOTE).append(PAIRDELIM);
+			this.eventMessage.append(key).append(KVDELIM).append(QUOTE).append(value).append(QUOTE).append(PAIRDELIM);
 		else
-			this.eventMessage.append(key).append(KVDELIM).append(value)
-					.append(PAIRDELIM);
+			this.eventMessage.append(key).append(KVDELIM).append(value).append(PAIRDELIM);
 
 	}
 
@@ -1392,8 +1387,7 @@ public class SplunkLogEvent {
 
 		if (useInternalDate) {
 			StringBuffer clonedMessage = new StringBuffer();
-			clonedMessage.append(DATEFORMATTER.format(new Date()))
-					.append(PAIRDELIM).append(this.eventMessage);
+			clonedMessage.append(DATEFORMATTER.format(new Date())).append(PAIRDELIM).append(this.eventMessage);
 			event = clonedMessage.toString();
 		} else
 			event = eventMessage.toString();
@@ -1437,25 +1431,19 @@ public class SplunkLogEvent {
 		addPair(AUTH_USER, authUser);
 	}
 
-	public void setChangeEndpointProtectionAction(
-			String changeEndpointProtectionAction) {
-		addPair(CHANGE_ENDPOINT_PROTECTION_ACTION,
-				changeEndpointProtectionAction);
+	public void setChangeEndpointProtectionAction(String changeEndpointProtectionAction) {
+		addPair(CHANGE_ENDPOINT_PROTECTION_ACTION, changeEndpointProtectionAction);
 	}
 
-	public void setChangeEndpointProtectionChangeType(
-			String changeEndpointProtectionChangeType) {
-		addPair(CHANGE_ENDPOINT_PROTECTION_CHANGE_TYPE,
-				changeEndpointProtectionChangeType);
+	public void setChangeEndpointProtectionChangeType(String changeEndpointProtectionChangeType) {
+		addPair(CHANGE_ENDPOINT_PROTECTION_CHANGE_TYPE, changeEndpointProtectionChangeType);
 	}
 
-	public void setChangeEndpointProtectionDest(
-			String changeEndpointProtectionDest) {
+	public void setChangeEndpointProtectionDest(String changeEndpointProtectionDest) {
 		addPair(CHANGE_ENDPOINT_PROTECTION_DEST, changeEndpointProtectionDest);
 	}
 
-	public void setChangeEndpointProtectionHash(
-			String changeEndpointProtectionHash) {
+	public void setChangeEndpointProtectionHash(String changeEndpointProtectionHash) {
 		addPair(CHANGE_ENDPOINT_PROTECTION_HASH, changeEndpointProtectionHash);
 	}
 
@@ -1463,29 +1451,23 @@ public class SplunkLogEvent {
 		addPair(CHANGE_ENDPOINT_PROTECTION_GID, changeEndpointProtectionGid);
 	}
 
-	public void setChangeEndpointProtectionIsdr(
-			boolean changeEndpointProtectionIsdr) {
+	public void setChangeEndpointProtectionIsdr(boolean changeEndpointProtectionIsdr) {
 		addPair(CHANGE_ENDPOINT_PROTECTION_ISDR, changeEndpointProtectionIsdr);
 	}
 
-	public void setChangeEndpointProtectionMode(
-			long changeEndpointProtectionMode) {
+	public void setChangeEndpointProtectionMode(long changeEndpointProtectionMode) {
 		addPair(CHANGE_ENDPOINT_PROTECTION_MODE, changeEndpointProtectionMode);
 	}
 
-	public void setChangeEndpointProtectionModtime(
-			String changeEndpointProtectionModtime) {
-		addPair(CHANGE_ENDPOINT_PROTECTION_MODTIME,
-				changeEndpointProtectionModtime);
+	public void setChangeEndpointProtectionModtime(String changeEndpointProtectionModtime) {
+		addPair(CHANGE_ENDPOINT_PROTECTION_MODTIME, changeEndpointProtectionModtime);
 	}
 
-	public void setChangeEndpointProtectionPath(
-			String changeEndpointProtectionPath) {
+	public void setChangeEndpointProtectionPath(String changeEndpointProtectionPath) {
 		addPair(CHANGE_ENDPOINT_PROTECTION_PATH, changeEndpointProtectionPath);
 	}
 
-	public void setChangeEndpointProtectionSize(
-			long changeEndpointProtectionSize) {
+	public void setChangeEndpointProtectionSize(long changeEndpointProtectionSize) {
 		addPair(CHANGE_ENDPOINT_PROTECTION_SIZE, changeEndpointProtectionSize);
 	}
 
@@ -1493,23 +1475,19 @@ public class SplunkLogEvent {
 		addPair(CHANGE_ENDPOINT_PROTECTION_UID, changeEndpointProtectionUid);
 	}
 
-	public void setChangeNetworkProtectionAction(
-			String changeNetworkProtectionAction) {
+	public void setChangeNetworkProtectionAction(String changeNetworkProtectionAction) {
 		addPair(CHANGE_NETWORK_PROTECTION_ACTION, changeNetworkProtectionAction);
 	}
 
-	public void setChangeNetworkProtectionCommand(
-			String changeNetworkProtectionCommand) {
-		addPair(CHANGE_NETWORK_PROTECTION_COMMAND,
-				changeNetworkProtectionCommand);
+	public void setChangeNetworkProtectionCommand(String changeNetworkProtectionCommand) {
+		addPair(CHANGE_NETWORK_PROTECTION_COMMAND, changeNetworkProtectionCommand);
 	}
 
 	public void setChangeNetworkProtectionDvc(String changeNetworkProtectionDvc) {
 		addPair(CHANGE_NETWORK_PROTECTION_DVC, changeNetworkProtectionDvc);
 	}
 
-	public void setChangeNetworkProtectionUser(
-			String changeNetworkProtectionUser) {
+	public void setChangeNetworkProtectionUser(String changeNetworkProtectionUser) {
 		addPair(CHANGE_NETWORK_PROTECTION_USER, changeNetworkProtectionUser);
 	}
 
@@ -1729,8 +1707,7 @@ public class SplunkLogEvent {
 		addPair(INTRUSION_DETECTION_SEVERITY, intrusionDetectionSeverity);
 	}
 
-	public void setIntrusionDetectionSignature(
-			String intrusionDetectionSignature) {
+	public void setIntrusionDetectionSignature(String intrusionDetectionSignature) {
 		addPair(INTRUSION_DETECTION_SIGNATURE, intrusionDetectionSignature);
 	}
 
@@ -1746,98 +1723,68 @@ public class SplunkLogEvent {
 		addPair(INTRUSION_DETECTION_VENDOR, intrusionDetectionVendor);
 	}
 
-	public void setMalwareEndpointProtectionAction(
-			String malwareEndpointProtectionAction) {
-		addPair(MALWARE_ENDPOINT_PROTECTION_ACTION,
-				malwareEndpointProtectionAction);
+	public void setMalwareEndpointProtectionAction(String malwareEndpointProtectionAction) {
+		addPair(MALWARE_ENDPOINT_PROTECTION_ACTION, malwareEndpointProtectionAction);
 	}
 
-	public void setMalwareEndpointProtectionDestNtDomain(
-			String malwareEndpointProtectionDestNtDomain) {
-		addPair(MALWARE_ENDPOINT_PROTECTION_DEST_NT_DOMAIN,
-				malwareEndpointProtectionDestNtDomain);
+	public void setMalwareEndpointProtectionDestNtDomain(String malwareEndpointProtectionDestNtDomain) {
+		addPair(MALWARE_ENDPOINT_PROTECTION_DEST_NT_DOMAIN, malwareEndpointProtectionDestNtDomain);
 	}
 
-	public void setMalwareEndpointProtectionFileHash(
-			String malwareEndpointProtectionFileHash) {
-		addPair(MALWARE_ENDPOINT_PROTECTION_FILE_HASH,
-				malwareEndpointProtectionFileHash);
+	public void setMalwareEndpointProtectionFileHash(String malwareEndpointProtectionFileHash) {
+		addPair(MALWARE_ENDPOINT_PROTECTION_FILE_HASH, malwareEndpointProtectionFileHash);
 	}
 
-	public void setMalwareEndpointProtectionFileName(
-			String malwareEndpointProtectionFileName) {
-		addPair(MALWARE_ENDPOINT_PROTECTION_FILE_NAME,
-				malwareEndpointProtectionFileName);
+	public void setMalwareEndpointProtectionFileName(String malwareEndpointProtectionFileName) {
+		addPair(MALWARE_ENDPOINT_PROTECTION_FILE_NAME, malwareEndpointProtectionFileName);
 	}
 
-	public void setMalwareEndpointProtectionFilePath(
-			String malwareEndpointProtectionFilePath) {
-		addPair(MALWARE_ENDPOINT_PROTECTION_FILE_PATH,
-				malwareEndpointProtectionFilePath);
+	public void setMalwareEndpointProtectionFilePath(String malwareEndpointProtectionFilePath) {
+		addPair(MALWARE_ENDPOINT_PROTECTION_FILE_PATH, malwareEndpointProtectionFilePath);
 	}
 
-	public void setMalwareEndpointProtectionProduct(
-			String malwareEndpointProtectionProduct) {
-		addPair(MALWARE_ENDPOINT_PROTECTION_PRODUCT,
-				malwareEndpointProtectionProduct);
+	public void setMalwareEndpointProtectionProduct(String malwareEndpointProtectionProduct) {
+		addPair(MALWARE_ENDPOINT_PROTECTION_PRODUCT, malwareEndpointProtectionProduct);
 	}
 
-	public void setMalwareEndpointProtectionProductVersion(
-			String malwareEndpointProtectionProductVersion) {
-		addPair(MALWARE_ENDPOINT_PROTECTION_PRODUCT_VERSION,
-				malwareEndpointProtectionProductVersion);
+	public void setMalwareEndpointProtectionProductVersion(String malwareEndpointProtectionProductVersion) {
+		addPair(MALWARE_ENDPOINT_PROTECTION_PRODUCT_VERSION, malwareEndpointProtectionProductVersion);
 	}
 
-	public void setMalwareEndpointProtectionSignature(
-			String malwareEndpointProtectionSignature) {
-		addPair(MALWARE_ENDPOINT_PROTECTION_SIGNATURE,
-				malwareEndpointProtectionSignature);
+	public void setMalwareEndpointProtectionSignature(String malwareEndpointProtectionSignature) {
+		addPair(MALWARE_ENDPOINT_PROTECTION_SIGNATURE, malwareEndpointProtectionSignature);
 	}
 
-	public void setMalwareEndpointProtectionSignatureVersion(
-			String malwareEndpointProtectionSignatureVersion) {
-		addPair(MALWARE_ENDPOINT_PROTECTION_SIGNATURE_VERSION,
-				malwareEndpointProtectionSignatureVersion);
+	public void setMalwareEndpointProtectionSignatureVersion(String malwareEndpointProtectionSignatureVersion) {
+		addPair(MALWARE_ENDPOINT_PROTECTION_SIGNATURE_VERSION, malwareEndpointProtectionSignatureVersion);
 	}
 
-	public void setMalwareEndpointProtectionDest(
-			String malwareEndpointProtectionDest) {
+	public void setMalwareEndpointProtectionDest(String malwareEndpointProtectionDest) {
 		addPair(MALWARE_ENDPOINT_PROTECTION_DEST, malwareEndpointProtectionDest);
 	}
 
-	public void setMalwareEndpointProtectionSrcNtDomain(
-			String malwareEndpointProtectionSrcNtDomain) {
-		addPair(MALWARE_ENDPOINT_PROTECTION_SRC_NT_DOMAIN,
-				malwareEndpointProtectionSrcNtDomain);
+	public void setMalwareEndpointProtectionSrcNtDomain(String malwareEndpointProtectionSrcNtDomain) {
+		addPair(MALWARE_ENDPOINT_PROTECTION_SRC_NT_DOMAIN, malwareEndpointProtectionSrcNtDomain);
 	}
 
-	public void setMalwareEndpointProtectionUser(
-			String malwareEndpointProtectionUser) {
+	public void setMalwareEndpointProtectionUser(String malwareEndpointProtectionUser) {
 		addPair(MALWARE_ENDPOINT_PROTECTION_USER, malwareEndpointProtectionUser);
 	}
 
-	public void setMalwareEndpointProtectionVendor(
-			String malwareEndpointProtectionVendor) {
-		addPair(MALWARE_ENDPOINT_PROTECTION_VENDOR,
-				malwareEndpointProtectionVendor);
+	public void setMalwareEndpointProtectionVendor(String malwareEndpointProtectionVendor) {
+		addPair(MALWARE_ENDPOINT_PROTECTION_VENDOR, malwareEndpointProtectionVendor);
 	}
 
-	public void setMalwareNetworkProtectionProduct(
-			String malwareNetworkProtectionProduct) {
-		addPair(MALWARE_NETWORK_PROTECTION_PRODUCT,
-				malwareNetworkProtectionProduct);
+	public void setMalwareNetworkProtectionProduct(String malwareNetworkProtectionProduct) {
+		addPair(MALWARE_NETWORK_PROTECTION_PRODUCT, malwareNetworkProtectionProduct);
 	}
 
-	public void setMalwareNetworkProtectionSeverity(
-			String malwareNetworkProtectionSeverity) {
-		addPair(MALWARE_NETWORK_PROTECTION_SEVERITY,
-				malwareNetworkProtectionSeverity);
+	public void setMalwareNetworkProtectionSeverity(String malwareNetworkProtectionSeverity) {
+		addPair(MALWARE_NETWORK_PROTECTION_SEVERITY, malwareNetworkProtectionSeverity);
 	}
 
-	public void setMalwareNetworkProtectionVendor(
-			String malwareNetworkProtectionVendor) {
-		addPair(MALWARE_NETWORK_PROTECTION_VENDOR,
-				malwareNetworkProtectionVendor);
+	public void setMalwareNetworkProtectionVendor(String malwareNetworkProtectionVendor) {
+		addPair(MALWARE_NETWORK_PROTECTION_VENDOR, malwareNetworkProtectionVendor);
 	}
 
 	public void setNetworkTrafficEssAction(String networkTrafficEssAction) {
@@ -1860,25 +1807,19 @@ public class SplunkLogEvent {
 		addPair(NETWORK_TRAFFIC_ESS_VENDOR, networkTrafficEssVendor);
 	}
 
-	public void setNetworkTrafficGenericAppLayer(
-			String networkTrafficGenericAppLayer) {
-		addPair(NETWORK_TRAFFIC_GENERIC_APP_LAYER,
-				networkTrafficGenericAppLayer);
+	public void setNetworkTrafficGenericAppLayer(String networkTrafficGenericAppLayer) {
+		addPair(NETWORK_TRAFFIC_GENERIC_APP_LAYER, networkTrafficGenericAppLayer);
 	}
 
-	public void setNetworkTrafficGenericBytesIn(
-			long networkTrafficGenericBytesIn) {
+	public void setNetworkTrafficGenericBytesIn(long networkTrafficGenericBytesIn) {
 		addPair(NETWORK_TRAFFIC_GENERIC_BYTES_IN, networkTrafficGenericBytesIn);
 	}
 
-	public void setNetworkTrafficGenericBytesOut(
-			long networkTrafficGenericBytesOut) {
-		addPair(NETWORK_TRAFFIC_GENERIC_BYTES_OUT,
-				networkTrafficGenericBytesOut);
+	public void setNetworkTrafficGenericBytesOut(long networkTrafficGenericBytesOut) {
+		addPair(NETWORK_TRAFFIC_GENERIC_BYTES_OUT, networkTrafficGenericBytesOut);
 	}
 
-	public void setNetworkTrafficGenericChannel(
-			String networkTrafficGenericChannel) {
+	public void setNetworkTrafficGenericChannel(String networkTrafficGenericChannel) {
 		addPair(NETWORK_TRAFFIC_GENERIC_CHANNEL, networkTrafficGenericChannel);
 	}
 
@@ -1886,153 +1827,111 @@ public class SplunkLogEvent {
 		addPair(NETWORK_TRAFFIC_GENERIC_CVE, networkTrafficGenericCve);
 	}
 
-	public void setNetworkTrafficGenericDestApp(
-			String networkTrafficGenericDestApp) {
+	public void setNetworkTrafficGenericDestApp(String networkTrafficGenericDestApp) {
 		addPair(NETWORK_TRAFFIC_GENERIC_DEST_APP, networkTrafficGenericDestApp);
 	}
 
-	public void setNetworkTrafficGenericDestCncChannel(
-			String networkTrafficGenericDestCncChannel) {
-		addPair(NETWORK_TRAFFIC_GENERIC_DEST_CNC_CHANNEL,
-				networkTrafficGenericDestCncChannel);
+	public void setNetworkTrafficGenericDestCncChannel(String networkTrafficGenericDestCncChannel) {
+		addPair(NETWORK_TRAFFIC_GENERIC_DEST_CNC_CHANNEL, networkTrafficGenericDestCncChannel);
 	}
 
-	public void setNetworkTrafficGenericDestCncName(
-			String networkTrafficGenericDestCncName) {
-		addPair(NETWORK_TRAFFIC_GENERIC_DEST_CNC_NAME,
-				networkTrafficGenericDestCncName);
+	public void setNetworkTrafficGenericDestCncName(String networkTrafficGenericDestCncName) {
+		addPair(NETWORK_TRAFFIC_GENERIC_DEST_CNC_NAME, networkTrafficGenericDestCncName);
 	}
 
-	public void setNetworkTrafficGenericDestCncPort(
-			String networkTrafficGenericDestCncPort) {
-		addPair(NETWORK_TRAFFIC_GENERIC_DEST_CNC_PORT,
-				networkTrafficGenericDestCncPort);
+	public void setNetworkTrafficGenericDestCncPort(String networkTrafficGenericDestCncPort) {
+		addPair(NETWORK_TRAFFIC_GENERIC_DEST_CNC_PORT, networkTrafficGenericDestCncPort);
 	}
 
-	public void setNetworkTrafficGenericDestCountry(
-			String networkTrafficGenericDestCountry) {
-		addPair(NETWORK_TRAFFIC_GENERIC_DEST_COUNTRY,
-				networkTrafficGenericDestCountry);
+	public void setNetworkTrafficGenericDestCountry(String networkTrafficGenericDestCountry) {
+		addPair(NETWORK_TRAFFIC_GENERIC_DEST_COUNTRY, networkTrafficGenericDestCountry);
 	}
 
-	public void setNetworkTrafficGenericDestHost(
-			String networkTrafficGenericDestHost) {
-		addPair(NETWORK_TRAFFIC_GENERIC_DEST_HOST,
-				networkTrafficGenericDestHost);
+	public void setNetworkTrafficGenericDestHost(String networkTrafficGenericDestHost) {
+		addPair(NETWORK_TRAFFIC_GENERIC_DEST_HOST, networkTrafficGenericDestHost);
 	}
 
-	public void setNetworkTrafficGenericDestInt(
-			String networkTrafficGenericDestInt) {
+	public void setNetworkTrafficGenericDestInt(String networkTrafficGenericDestInt) {
 		addPair(NETWORK_TRAFFIC_GENERIC_DEST_INT, networkTrafficGenericDestInt);
 	}
 
-	public void setNetworkTrafficGenericDestIp(
-			String networkTrafficGenericDestIp) {
+	public void setNetworkTrafficGenericDestIp(String networkTrafficGenericDestIp) {
 		addPair(NETWORK_TRAFFIC_GENERIC_DEST_IP, networkTrafficGenericDestIp);
 	}
 
-	public void setNetworkTrafficGenericDestIpv6(
-			String networkTrafficGenericDestIpv6) {
-		addPair(NETWORK_TRAFFIC_GENERIC_DEST_IPV6,
-				networkTrafficGenericDestIpv6);
+	public void setNetworkTrafficGenericDestIpv6(String networkTrafficGenericDestIpv6) {
+		addPair(NETWORK_TRAFFIC_GENERIC_DEST_IPV6, networkTrafficGenericDestIpv6);
 	}
 
 	public void setNetworkTrafficGenericDestLat(int networkTrafficGenericDestLat) {
 		addPair(NETWORK_TRAFFIC_GENERIC_DEST_LAT, networkTrafficGenericDestLat);
 	}
 
-	public void setNetworkTrafficGenericDestLong(
-			int networkTrafficGenericDestLong) {
-		addPair(NETWORK_TRAFFIC_GENERIC_DEST_LONG,
-				networkTrafficGenericDestLong);
+	public void setNetworkTrafficGenericDestLong(int networkTrafficGenericDestLong) {
+		addPair(NETWORK_TRAFFIC_GENERIC_DEST_LONG, networkTrafficGenericDestLong);
 	}
 
-	public void setNetworkTrafficGenericDestMac(
-			String networkTrafficGenericDestMac) {
+	public void setNetworkTrafficGenericDestMac(String networkTrafficGenericDestMac) {
 		addPair(NETWORK_TRAFFIC_GENERIC_DEST_MAC, networkTrafficGenericDestMac);
 	}
 
-	public void setNetworkTrafficGenericDestNtDomain(
-			String networkTrafficGenericDestNtDomain) {
-		addPair(NETWORK_TRAFFIC_GENERIC_DEST_NT_DOMAIN,
-				networkTrafficGenericDestNtDomain);
+	public void setNetworkTrafficGenericDestNtDomain(String networkTrafficGenericDestNtDomain) {
+		addPair(NETWORK_TRAFFIC_GENERIC_DEST_NT_DOMAIN, networkTrafficGenericDestNtDomain);
 	}
 
-	public void setNetworkTrafficGenericDestNtHost(
-			String networkTrafficGenericDestNtHost) {
-		addPair(NETWORK_TRAFFIC_GENERIC_DEST_NT_HOST,
-				networkTrafficGenericDestNtHost);
+	public void setNetworkTrafficGenericDestNtHost(String networkTrafficGenericDestNtHost) {
+		addPair(NETWORK_TRAFFIC_GENERIC_DEST_NT_HOST, networkTrafficGenericDestNtHost);
 	}
 
-	public void setNetworkTrafficGenericDestPort(
-			int networkTrafficGenericDestPort) {
-		addPair(NETWORK_TRAFFIC_GENERIC_DEST_PORT,
-				networkTrafficGenericDestPort);
+	public void setNetworkTrafficGenericDestPort(int networkTrafficGenericDestPort) {
+		addPair(NETWORK_TRAFFIC_GENERIC_DEST_PORT, networkTrafficGenericDestPort);
 	}
 
-	public void setNetworkTrafficGenericDestTranslatedIp(
-			String networkTrafficGenericDestTranslatedIp) {
-		addPair(NETWORK_TRAFFIC_GENERIC_DEST_TRANSLATED_IP,
-				networkTrafficGenericDestTranslatedIp);
+	public void setNetworkTrafficGenericDestTranslatedIp(String networkTrafficGenericDestTranslatedIp) {
+		addPair(NETWORK_TRAFFIC_GENERIC_DEST_TRANSLATED_IP, networkTrafficGenericDestTranslatedIp);
 	}
 
-	public void setNetworkTrafficGenericDestTranslatedPort(
-			int networkTrafficGenericDestTranslatedPort) {
-		addPair(NETWORK_TRAFFIC_GENERIC_DEST_TRANSLATED_PORT,
-				networkTrafficGenericDestTranslatedPort);
+	public void setNetworkTrafficGenericDestTranslatedPort(int networkTrafficGenericDestTranslatedPort) {
+		addPair(NETWORK_TRAFFIC_GENERIC_DEST_TRANSLATED_PORT, networkTrafficGenericDestTranslatedPort);
 	}
 
-	public void setNetworkTrafficGenericIpVersion(
-			int networkTrafficGenericIpVersion) {
-		addPair(NETWORK_TRAFFIC_GENERIC_IP_VERSION,
-				networkTrafficGenericIpVersion);
+	public void setNetworkTrafficGenericIpVersion(int networkTrafficGenericIpVersion) {
+		addPair(NETWORK_TRAFFIC_GENERIC_IP_VERSION, networkTrafficGenericIpVersion);
 	}
 
-	public void setNetworkTrafficGenericOutboundInterface(
-			String networkTrafficGenericOutboundInterface) {
-		addPair(NETWORK_TRAFFIC_GENERIC_OUTBOUND_INTERFACE,
-				networkTrafficGenericOutboundInterface);
+	public void setNetworkTrafficGenericOutboundInterface(String networkTrafficGenericOutboundInterface) {
+		addPair(NETWORK_TRAFFIC_GENERIC_OUTBOUND_INTERFACE, networkTrafficGenericOutboundInterface);
 	}
 
-	public void setNetworkTrafficGenericPacketsIn(
-			long networkTrafficGenericPacketsIn) {
-		addPair(NETWORK_TRAFFIC_GENERIC_PACKETS_IN,
-				networkTrafficGenericPacketsIn);
+	public void setNetworkTrafficGenericPacketsIn(long networkTrafficGenericPacketsIn) {
+		addPair(NETWORK_TRAFFIC_GENERIC_PACKETS_IN, networkTrafficGenericPacketsIn);
 	}
 
-	public void setNetworkTrafficGenericPacketsOut(
-			long networkTrafficGenericPacketsOut) {
-		addPair(NETWORK_TRAFFIC_GENERIC_PACKETS_OUT,
-				networkTrafficGenericPacketsOut);
+	public void setNetworkTrafficGenericPacketsOut(long networkTrafficGenericPacketsOut) {
+		addPair(NETWORK_TRAFFIC_GENERIC_PACKETS_OUT, networkTrafficGenericPacketsOut);
 	}
 
 	public void setNetworkTrafficGenericProto(String networkTrafficGenericProto) {
 		addPair(NETWORK_TRAFFIC_GENERIC_PROTO, networkTrafficGenericProto);
 	}
 
-	public void setNetworkTrafficGenericSessionId(
-			String networkTrafficGenericSessionId) {
-		addPair(NETWORK_TRAFFIC_GENERIC_SESSION_ID,
-				networkTrafficGenericSessionId);
+	public void setNetworkTrafficGenericSessionId(String networkTrafficGenericSessionId) {
+		addPair(NETWORK_TRAFFIC_GENERIC_SESSION_ID, networkTrafficGenericSessionId);
 	}
 
 	public void setNetworkTrafficGenericSsid(String networkTrafficGenericSsid) {
 		addPair(NETWORK_TRAFFIC_GENERIC_SSID, networkTrafficGenericSsid);
 	}
 
-	public void setNetworkTrafficGenericSrcCountry(
-			String networkTrafficGenericSrcCountry) {
-		addPair(NETWORK_TRAFFIC_GENERIC_SRC_COUNTRY,
-				networkTrafficGenericSrcCountry);
+	public void setNetworkTrafficGenericSrcCountry(String networkTrafficGenericSrcCountry) {
+		addPair(NETWORK_TRAFFIC_GENERIC_SRC_COUNTRY, networkTrafficGenericSrcCountry);
 	}
 
-	public void setNetworkTrafficGenericSrcHost(
-			String networkTrafficGenericSrcHost) {
+	public void setNetworkTrafficGenericSrcHost(String networkTrafficGenericSrcHost) {
 		addPair(NETWORK_TRAFFIC_GENERIC_SRC_HOST, networkTrafficGenericSrcHost);
 	}
 
-	public void setNetworkTrafficGenericSrcInt(
-			String networkTrafficGenericSrcInt) {
+	public void setNetworkTrafficGenericSrcInt(String networkTrafficGenericSrcInt) {
 		addPair(NETWORK_TRAFFIC_GENERIC_SRC_INT, networkTrafficGenericSrcInt);
 	}
 
@@ -2040,8 +1939,7 @@ public class SplunkLogEvent {
 		addPair(NETWORK_TRAFFIC_GENERIC_SRC_IP, networkTrafficGenericSrcIp);
 	}
 
-	public void setNetworkTrafficGenericSrcIpv6(
-			String networkTrafficGenericSrcIpv6) {
+	public void setNetworkTrafficGenericSrcIpv6(String networkTrafficGenericSrcIpv6) {
 		addPair(NETWORK_TRAFFIC_GENERIC_SRC_IPV6, networkTrafficGenericSrcIpv6);
 	}
 
@@ -2053,53 +1951,39 @@ public class SplunkLogEvent {
 		addPair(NETWORK_TRAFFIC_GENERIC_SRC_LONG, networkTrafficGenericSrcLong);
 	}
 
-	public void setNetworkTrafficGenericSrcMac(
-			String networkTrafficGenericSrcMac) {
+	public void setNetworkTrafficGenericSrcMac(String networkTrafficGenericSrcMac) {
 		addPair(NETWORK_TRAFFIC_GENERIC_SRC_MAC, networkTrafficGenericSrcMac);
 	}
 
-	public void setNetworkTrafficGenericSrcNtDomain(
-			String networkTrafficGenericSrcNtDomain) {
-		addPair(NETWORK_TRAFFIC_GENERIC_SRC_NT_DOMAIN,
-				networkTrafficGenericSrcNtDomain);
+	public void setNetworkTrafficGenericSrcNtDomain(String networkTrafficGenericSrcNtDomain) {
+		addPair(NETWORK_TRAFFIC_GENERIC_SRC_NT_DOMAIN, networkTrafficGenericSrcNtDomain);
 	}
 
-	public void setNetworkTrafficGenericSrcNtHost(
-			String networkTrafficGenericSrcNtHost) {
-		addPair(NETWORK_TRAFFIC_GENERIC_SRC_NT_HOST,
-				networkTrafficGenericSrcNtHost);
+	public void setNetworkTrafficGenericSrcNtHost(String networkTrafficGenericSrcNtHost) {
+		addPair(NETWORK_TRAFFIC_GENERIC_SRC_NT_HOST, networkTrafficGenericSrcNtHost);
 	}
 
 	public void setNetworkTrafficGenericSrcPort(int networkTrafficGenericSrcPort) {
 		addPair(NETWORK_TRAFFIC_GENERIC_SRC_PORT, networkTrafficGenericSrcPort);
 	}
 
-	public void setNetworkTrafficGenericSrcTranslatedIp(
-			String networkTrafficGenericSrcTranslatedIp) {
-		addPair(NETWORK_TRAFFIC_GENERIC_SRC_TRANSLATED_IP,
-				networkTrafficGenericSrcTranslatedIp);
+	public void setNetworkTrafficGenericSrcTranslatedIp(String networkTrafficGenericSrcTranslatedIp) {
+		addPair(NETWORK_TRAFFIC_GENERIC_SRC_TRANSLATED_IP, networkTrafficGenericSrcTranslatedIp);
 	}
 
-	public void setNetworkTrafficGenericSrcTranslatedPort(
-			int networkTrafficGenericSrcTranslatedPort) {
-		addPair(NETWORK_TRAFFIC_GENERIC_SRC_TRANSLATED_PORT,
-				networkTrafficGenericSrcTranslatedPort);
+	public void setNetworkTrafficGenericSrcTranslatedPort(int networkTrafficGenericSrcTranslatedPort) {
+		addPair(NETWORK_TRAFFIC_GENERIC_SRC_TRANSLATED_PORT, networkTrafficGenericSrcTranslatedPort);
 	}
 
-	public void setNetworkTrafficGenericSyslogId(
-			String networkTrafficGenericSyslogId) {
-		addPair(NETWORK_TRAFFIC_GENERIC_SYSLOG_ID,
-				networkTrafficGenericSyslogId);
+	public void setNetworkTrafficGenericSyslogId(String networkTrafficGenericSyslogId) {
+		addPair(NETWORK_TRAFFIC_GENERIC_SYSLOG_ID, networkTrafficGenericSyslogId);
 	}
 
-	public void setNetworkTrafficGenericSyslogPriority(
-			String networkTrafficGenericSyslogPriority) {
-		addPair(NETWORK_TRAFFIC_GENERIC_SYSLOG_PRIORITY,
-				networkTrafficGenericSyslogPriority);
+	public void setNetworkTrafficGenericSyslogPriority(String networkTrafficGenericSyslogPriority) {
+		addPair(NETWORK_TRAFFIC_GENERIC_SYSLOG_PRIORITY, networkTrafficGenericSyslogPriority);
 	}
 
-	public void setNetworkTrafficGenericTcpFlag(
-			String networkTrafficGenericTcpFlag) {
+	public void setNetworkTrafficGenericTcpFlag(String networkTrafficGenericTcpFlag) {
 		addPair(NETWORK_TRAFFIC_GENERIC_TCP_FLAG, networkTrafficGenericTcpFlag);
 	}
 
@@ -2107,10 +1991,8 @@ public class SplunkLogEvent {
 		addPair(NETWORK_TRAFFIC_GENERIC_TOS, networkTrafficGenericTos);
 	}
 
-	public void setNetworkTrafficGenericTransport(
-			String networkTrafficGenericTransport) {
-		addPair(NETWORK_TRAFFIC_GENERIC_TRANSPORT,
-				networkTrafficGenericTransport);
+	public void setNetworkTrafficGenericTransport(String networkTrafficGenericTransport) {
+		addPair(NETWORK_TRAFFIC_GENERIC_TRANSPORT, networkTrafficGenericTransport);
 	}
 
 	public void setNetworkTrafficGenericTtl(int networkTrafficGenericTtl) {
@@ -2121,10 +2003,8 @@ public class SplunkLogEvent {
 		addPair(NETWORK_TRAFFIC_GENERIC_VLAN_ID, networkTrafficGenericVlanId);
 	}
 
-	public void setNetworkTrafficGenericVlanName(
-			String networkTrafficGenericVlanName) {
-		addPair(NETWORK_TRAFFIC_GENERIC_VLAN_NAME,
-				networkTrafficGenericVlanName);
+	public void setNetworkTrafficGenericVlanName(String networkTrafficGenericVlanName) {
+		addPair(NETWORK_TRAFFIC_GENERIC_VLAN_NAME, networkTrafficGenericVlanName);
 	}
 
 	public void setPacketFilteringAction(String packetFilteringAction) {
@@ -2227,10 +2107,8 @@ public class SplunkLogEvent {
 		addPair(SYSTEM_CENTER_OS, systemCenterOs);
 	}
 
-	public void setSystemCenterPercentprocessortime(
-			int systemCenterPercentprocessortime) {
-		addPair(SYSTEM_CENTER_PERCENTPROCESSORTIME,
-				systemCenterPercentprocessortime);
+	public void setSystemCenterPercentprocessortime(int systemCenterPercentprocessortime) {
+		addPair(SYSTEM_CENTER_PERCENTPROCESSORTIME, systemCenterPercentprocessortime);
 	}
 
 	public void setSystemCenterSetlocaldefs(int systemCenterSetlocaldefs) {
@@ -2297,33 +2175,24 @@ public class SplunkLogEvent {
 		addPair(UPDATE_PACKAGE, updatePackage);
 	}
 
-	public void setUserInfoUpdatesAffectedUser(
-			String userInfoUpdatesAffectedUser) {
+	public void setUserInfoUpdatesAffectedUser(String userInfoUpdatesAffectedUser) {
 		addPair(USER_INFO_UPDATES_AFFECTED_USER, userInfoUpdatesAffectedUser);
 	}
 
-	public void setUserInfoUpdatesAffectedUserGroup(
-			String userInfoUpdatesAffectedUserGroup) {
-		addPair(USER_INFO_UPDATES_AFFECTED_USER_GROUP,
-				userInfoUpdatesAffectedUserGroup);
+	public void setUserInfoUpdatesAffectedUserGroup(String userInfoUpdatesAffectedUserGroup) {
+		addPair(USER_INFO_UPDATES_AFFECTED_USER_GROUP, userInfoUpdatesAffectedUserGroup);
 	}
 
-	public void setUserInfoUpdatesAffectedUserGroupId(
-			int userInfoUpdatesAffectedUserGroupId) {
-		addPair(USER_INFO_UPDATES_AFFECTED_USER_GROUP_ID,
-				userInfoUpdatesAffectedUserGroupId);
+	public void setUserInfoUpdatesAffectedUserGroupId(int userInfoUpdatesAffectedUserGroupId) {
+		addPair(USER_INFO_UPDATES_AFFECTED_USER_GROUP_ID, userInfoUpdatesAffectedUserGroupId);
 	}
 
-	public void setUserInfoUpdatesAffectedUserId(
-			int userInfoUpdatesAffectedUserId) {
-		addPair(USER_INFO_UPDATES_AFFECTED_USER_ID,
-				userInfoUpdatesAffectedUserId);
+	public void setUserInfoUpdatesAffectedUserId(int userInfoUpdatesAffectedUserId) {
+		addPair(USER_INFO_UPDATES_AFFECTED_USER_ID, userInfoUpdatesAffectedUserId);
 	}
 
-	public void setUserInfoUpdatesAffectedUserPrivilege(
-			String userInfoUpdatesAffectedUserPrivilege) {
-		addPair(USER_INFO_UPDATES_AFFECTED_USER_PRIVILEGE,
-				userInfoUpdatesAffectedUserPrivilege);
+	public void setUserInfoUpdatesAffectedUserPrivilege(String userInfoUpdatesAffectedUserPrivilege) {
+		addPair(USER_INFO_UPDATES_AFFECTED_USER_PRIVILEGE, userInfoUpdatesAffectedUserPrivilege);
 	}
 
 	public void setUserInfoUpdatesUser(String userInfoUpdatesUser) {
@@ -2342,8 +2211,7 @@ public class SplunkLogEvent {
 		addPair(USER_INFO_UPDATES_USER_ID, userInfoUpdatesUserId);
 	}
 
-	public void setUserInfoUpdatesUserPrivilege(
-			String userInfoUpdatesUserPrivilege) {
+	public void setUserInfoUpdatesUserPrivilege(String userInfoUpdatesUserPrivilege) {
 		addPair(USER_INFO_UPDATES_USER_PRIVILEGE, userInfoUpdatesUserPrivilege);
 	}
 
@@ -2355,10 +2223,8 @@ public class SplunkLogEvent {
 		addPair(USER_INFO_UPDATES_USER_SUBJECT_ID, userInfoUpdatesUserSubjectId);
 	}
 
-	public void setUserInfoUpdatesUserSubjectPrivilege(
-			String userInfoUpdatesUserSubjectPrivilege) {
-		addPair(USER_INFO_UPDATES_USER_SUBJECT_PRIVILEGE,
-				userInfoUpdatesUserSubjectPrivilege);
+	public void setUserInfoUpdatesUserSubjectPrivilege(String userInfoUpdatesUserSubjectPrivilege) {
+		addPair(USER_INFO_UPDATES_USER_SUBJECT_PRIVILEGE, userInfoUpdatesUserSubjectPrivilege);
 	}
 
 	public void setVulnerabilityCategory(String vulnerabilityCategory) {

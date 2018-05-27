@@ -59,40 +59,38 @@ public class SplunkHECInput extends SplunkInput {
 		}
 	};
 
-	public SplunkHECInput(HECTransportConfig config) throws Exception {
+	public SplunkHECInput(HECTransportConfig config, String activationKey) throws Exception {
 
-		this.config = config;
+		activationKeyCheck(activationKey);
 
-		this.batchBuffer = Collections
-				.synchronizedList(new LinkedList<String>());
-		this.lastEventReceivedTime = System.currentTimeMillis();
+		if (activated) {
+			this.config = config;
 
-		Registry<SchemeIOSessionStrategy> sslSessionStrategy = RegistryBuilder
-				.<SchemeIOSessionStrategy> create()
-				.register("http", NoopIOSessionStrategy.INSTANCE)
-				.register(
-						"https",
-						new SSLIOSessionStrategy(getSSLContext(),
-								HOSTNAME_VERIFIER)).build();
+			this.batchBuffer = Collections.synchronizedList(new LinkedList<String>());
+			this.lastEventReceivedTime = System.currentTimeMillis();
 
-		ConnectingIOReactor ioReactor = new DefaultConnectingIOReactor();
-		PoolingNHttpClientConnectionManager cm = new PoolingNHttpClientConnectionManager(
-				ioReactor, sslSessionStrategy);
-		cm.setMaxTotal(config.getPoolsize());
+			Registry<SchemeIOSessionStrategy> sslSessionStrategy = RegistryBuilder.<SchemeIOSessionStrategy> create()
+					.register("http", NoopIOSessionStrategy.INSTANCE)
+					.register("https", new SSLIOSessionStrategy(getSSLContext(), HOSTNAME_VERIFIER)).build();
 
-		HttpHost splunk = new HttpHost(config.getHost(), config.getPort());
-		cm.setMaxPerRoute(new HttpRoute(splunk), config.getPoolsize());
+			ConnectingIOReactor ioReactor = new DefaultConnectingIOReactor();
+			PoolingNHttpClientConnectionManager cm = new PoolingNHttpClientConnectionManager(ioReactor,
+					sslSessionStrategy);
+			cm.setMaxTotal(config.getPoolsize());
 
-		httpClient = HttpAsyncClients.custom().setConnectionManager(cm).build();
+			HttpHost splunk = new HttpHost(config.getHost(), config.getPort());
+			cm.setMaxPerRoute(new HttpRoute(splunk), config.getPoolsize());
 
-		uri = new URIBuilder().setScheme(config.isHttps() ? "https" : "http")
-				.setHost(config.getHost()).setPort(config.getPort())
-				.setPath("/services/collector").build();
+			httpClient = HttpAsyncClients.custom().setConnectionManager(cm).build();
 
-		openStream();
+			uri = new URIBuilder().setScheme(config.isHttps() ? "https" : "http").setHost(config.getHost())
+					.setPort(config.getPort()).setPath("/services/collector").build();
 
-		if (config.isBatchMode()) {
-			new BatchBufferActivityCheckerThread().start();
+			openStream();
+
+			if (config.isBatchMode()) {
+				new BatchBufferActivityCheckerThread().start();
+			}
 		}
 	}
 
@@ -108,12 +106,13 @@ public class SplunkHECInput extends SplunkInput {
 				String currentMessage = "";
 				try {
 					long currentTime = System.currentTimeMillis();
-					if ((currentTime - lastEventReceivedTime) >= config
-							.getMaxInactiveTimeBeforeBatchFlush()) {
+					if ((currentTime - lastEventReceivedTime) >= config.getMaxInactiveTimeBeforeBatchFlush()) {
 						if (batchBuffer.size() > 0) {
-							currentMessage = rollOutBatchBuffer();
-							batchBuffer.clear();
-							currentBatchSizeBytes = 0;
+							synchronized (batchBuffer) {
+								currentMessage = rollOutBatchBuffer();
+								batchBuffer.clear();
+								currentBatchSizeBytes = 0;
+							}
 							hecPost(currentMessage);
 						}
 					}
@@ -139,15 +138,13 @@ public class SplunkHECInput extends SplunkInput {
 
 	private SSLContext getSSLContext() {
 		TrustStrategy acceptingTrustStrategy = new TrustStrategy() {
-			public boolean isTrusted(X509Certificate[] certificate,
-					String authType) {
+			public boolean isTrusted(X509Certificate[] certificate, String authType) {
 				return true;
 			}
 		};
 		SSLContext sslContext = null;
 		try {
-			sslContext = SSLContexts.custom()
-					.loadTrustMaterial(null, acceptingTrustStrategy).build();
+			sslContext = SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy).build();
 		} catch (Exception e) {
 			// Handle error
 		}
@@ -192,8 +189,7 @@ public class SplunkHECInput extends SplunkInput {
 		if (trimmedMessage.startsWith("{") && trimmedMessage.endsWith("}")) {
 			// this is *probably* JSON.
 			return trimmedMessage;
-		} else if (trimmedMessage.startsWith("\"")
-				&& trimmedMessage.endsWith("\"")
+		} else if (trimmedMessage.startsWith("\"") && trimmedMessage.endsWith("\"")
 				&& !message.substring(1, message.length() - 1).contains("\"")) {
 			// this appears to be a quoted string with no internal quotes
 			return trimmedMessage;
@@ -203,7 +199,7 @@ public class SplunkHECInput extends SplunkInput {
 			return "\"" + message.replace("\"", "\\\"") + "\"";
 		}
 	}
-	
+
 	/**
 	 * send an event via stream
 	 * 
@@ -211,55 +207,57 @@ public class SplunkHECInput extends SplunkInput {
 	 */
 	public void streamEvent(String message) {
 
-		String currentMessage = "";
-		try {
+		if (activated) {
+			String currentMessage = "";
+			try {
 
-			message = escapeMessageIfNeeded(message);
+				message = escapeMessageIfNeeded(message);
 
-			// could use a JSON Object , but the JSON is so trivial , just
-			// building it with a StringBuffer
-			StringBuffer json = new StringBuffer();
-			json.append("{\"").append("event\":").append(message).append(",\"")
-					.append("index\":\"").append(config.getIndex())
-					.append("\",\"").append("source\":\"")
-					.append(config.getSource()).append("\",\"")
-					.append("sourcetype\":\"").append(config.getSourcetype())
-					.append("\"").append("}");
+				// could use a JSON Object , but the JSON is so trivial , just
+				// building it with a StringBuffer
+				StringBuffer json = new StringBuffer();
+				json.append("{\"").append("event\":").append(message).append(",\"").append("index\":\"")
+						.append(config.getIndex()).append("\",\"").append("source\":\"").append(config.getSource())
+						.append("\",\"").append("sourcetype\":\"").append(config.getSourcetype()).append("\"")
+						.append("}");
 
-			currentMessage = json.toString();
+				currentMessage = json.toString();
 
-			if (config.isBatchMode()) {
-				lastEventReceivedTime = System.currentTimeMillis();
-				currentBatchSizeBytes += currentMessage.length();
-				batchBuffer.add(currentMessage);
-				if (flushBuffer()) {
-					currentMessage = rollOutBatchBuffer();
-					batchBuffer.clear();
-					currentBatchSizeBytes = 0;
+				if (config.isBatchMode()) {
+					lastEventReceivedTime = System.currentTimeMillis();
+					currentBatchSizeBytes += currentMessage.length();
+					batchBuffer.add(currentMessage);
+					if (flushBuffer()) {
+						synchronized (batchBuffer) {
+							currentMessage = rollOutBatchBuffer();
+							batchBuffer.clear();
+							currentBatchSizeBytes = 0;
+						}
+						hecPost(currentMessage);
+					}
+				} else {
 					hecPost(currentMessage);
 				}
-			} else {
-				hecPost(currentMessage);
-			}
 
-			// flush the queue
-			while (queueContainsEvents()) {
-				String messageOffQueue = dequeue();
-				currentMessage = messageOffQueue;
-				hecPost(currentMessage);
-			}
+				// flush the queue
+				while (queueContainsEvents()) {
+					String messageOffQueue = dequeue();
+					currentMessage = messageOffQueue;
+					hecPost(currentMessage);
+				}
 
-		} catch (Exception e) {
-			// something went wrong , put message on the queue for retry
-			enqueue(currentMessage);
-			try {
-				closeStream();
-			} catch (Exception e1) {
-			}
+			} catch (Exception e) {
+				// something went wrong , put message on the queue for retry
+				enqueue(currentMessage);
+				try {
+					closeStream();
+				} catch (Exception e1) {
+				}
 
-			try {
-				openStream();
-			} catch (Exception e2) {
+				try {
+					openStream();
+				} catch (Exception e2) {
+				}
 			}
 		}
 	}
@@ -287,8 +285,7 @@ public class SplunkHECInput extends SplunkInput {
 		HttpPost post = new HttpPost(uri);
 		post.addHeader("Authorization", "Splunk " + config.getToken());
 
-		StringEntity requestEntity = new StringEntity(currentMessage,
-				ContentType.create("application/json", "UTF-8"));
+		StringEntity requestEntity = new StringEntity(currentMessage, ContentType.create("application/json", "UTF-8"));
 
 		post.setEntity(requestEntity);
 		Future<HttpResponse> future = httpClient.execute(post, null);

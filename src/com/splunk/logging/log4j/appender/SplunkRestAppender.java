@@ -26,11 +26,11 @@ public class SplunkRestAppender extends AppenderSkeleton {
 	private String delivery = STREAM; // stream or simple
 
 	// event meta data
-	private String metaSource = "";;
-	private String metaSourcetype = "";;
-	private String metaIndex = "";;
-	private String metaHostRegex = "";;
-	private String metaHost = "";;
+	private String metaSource = "";
+	private String metaSourcetype = "";
+	private String metaIndex = "";
+	private String metaHostRegex = "";
+	private String metaHost = "";
 
 	// queuing settings
 	private String maxQueueSize;
@@ -38,6 +38,8 @@ public class SplunkRestAppender extends AppenderSkeleton {
 
 	private SplunkRestInput sri;
 	private RestEventData red = new RestEventData();
+
+	private String activationKey;
 
 	/**
 	 * Constructor
@@ -64,15 +66,13 @@ public class SplunkRestAppender extends AppenderSkeleton {
 
 		try {
 			if (sri == null) {
-				sri = new SplunkRestInput(user, pass, host, port, red,
-						delivery.equals(STREAM) ? true : false);
+				sri = new SplunkRestInput(user, pass, host, port, red, delivery.equals(STREAM) ? true : false,
+						this.activationKey);
 				sri.setMaxQueueSize(maxQueueSize);
 				sri.setDropEventsOnQueueFull(dropEventsOnQueueFull);
 			}
 		} catch (Exception e) {
-			errorHandler
-					.error("Couldn't establish REST service for SplunkRestAppender named \""
-							+ this.name + "\".");
+			errorHandler.error("Couldn't establish REST service for SplunkRestAppender named \"" + this.name + "\".");
 			return;
 		}
 
@@ -82,9 +82,7 @@ public class SplunkRestAppender extends AppenderSkeleton {
 		else if (delivery.equals(SIMPLE))
 			sri.sendEvent(formatted);
 		else {
-			errorHandler
-					.error("Unsupported delivery setting for SplunkRestAppender named \""
-							+ this.name + "\".");
+			errorHandler.error("Unsupported delivery setting for SplunkRestAppender named \"" + this.name + "\".");
 			return;
 		}
 
@@ -213,6 +211,14 @@ public class SplunkRestAppender extends AppenderSkeleton {
 
 	public void setDropEventsOnQueueFull(boolean dropEventsOnQueueFull) {
 		this.dropEventsOnQueueFull = dropEventsOnQueueFull;
+	}
+
+	public String getActivationKey() {
+		return this.activationKey;
+	}
+
+	public void setActivationKey(String activationKey) {
+		this.activationKey = activationKey;
 	}
 
 }

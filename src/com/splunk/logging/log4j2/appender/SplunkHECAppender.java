@@ -27,14 +27,16 @@ public final class SplunkHECAppender extends AbstractAppender {
 
 	private SplunkHECInput shi;
 
-	protected SplunkHECAppender(String name, HECTransportConfig config,
-			boolean dropEventsOnQueueFull, String maxQueueSize, Filter filter,
-			Layout<? extends Serializable> layout,
-			final boolean ignoreExceptions) {
+	private String activationKey;
+
+	protected SplunkHECAppender(String name, HECTransportConfig config, boolean dropEventsOnQueueFull,
+			String maxQueueSize, Filter filter, Layout<? extends Serializable> layout, final boolean ignoreExceptions,
+			String activationKey) {
 		super(name, filter, layout, ignoreExceptions);
 		this.config = config;
+		this.activationKey = activationKey;
 		try {
-			this.shi = new SplunkHECInput(config);
+			this.shi = new SplunkHECInput(config, this.activationKey);
 			this.shi.setMaxQueueSize(maxQueueSize);
 			this.shi.setDropEventsOnQueueFull(dropEventsOnQueueFull);
 		} catch (Exception e) {
@@ -48,15 +50,14 @@ public final class SplunkHECAppender extends AbstractAppender {
 
 			try {
 				if (shi == null) {
-					shi = new SplunkHECInput(config);
+					shi = new SplunkHECInput(config, this.activationKey);
 					shi.setMaxQueueSize(maxQueueSize);
 					shi.setDropEventsOnQueueFull(dropEventsOnQueueFull);
 				}
 			} catch (Exception e) {
 
 				throw new AppenderLoggingException(
-						"Couldn't establish connection for SplunkHECAppender named \""
-								+ this.getName() + "\".");
+						"Couldn't establish connection for SplunkHECAppender named \"" + this.getName() + "\".");
 			}
 
 			final byte[] bytes = getLayout().toByteArray(event);
@@ -75,18 +76,13 @@ public final class SplunkHECAppender extends AbstractAppender {
 	}
 
 	@PluginFactory
-	public static SplunkHECAppender createAppender(
-			@PluginAttribute("name") String name,
+	public static SplunkHECAppender createAppender(@PluginAttribute("name") String name,
 			@PluginElement("Layout") Layout<? extends Serializable> layout,
-			@PluginElement("Filter") final Filter filter,
-			@PluginAttribute("token") String token,
-			@PluginAttribute("host") String host,
-			@PluginAttribute("port") int port,
-			@PluginAttribute("poolsize") int poolsize,
-			@PluginAttribute("https") boolean https,
-			@PluginAttribute("index") String index,
-			@PluginAttribute("source") String source,
-			@PluginAttribute("sourcetype") String sourcetype,
+			@PluginElement("Filter") final Filter filter, @PluginAttribute("token") String token,
+			@PluginAttribute("activationKey") String activationKey, @PluginAttribute("host") String host,
+			@PluginAttribute("port") int port, @PluginAttribute("poolsize") int poolsize,
+			@PluginAttribute("https") boolean https, @PluginAttribute("index") String index,
+			@PluginAttribute("source") String source, @PluginAttribute("sourcetype") String sourcetype,
 			@PluginAttribute("maxQueueSize") String maxQueueSize,
 			@PluginAttribute("dropEventsOnQueueFull") boolean dropEventsOnQueueFull,
 			@PluginAttribute("batchMode") boolean batchMode,
@@ -123,7 +119,7 @@ public final class SplunkHECAppender extends AbstractAppender {
 		config.setMaxBatchSizeEvents(maxBatchSizeEvents);
 		config.setMaxInactiveTimeBeforeBatchFlush(maxInactiveTimeBeforeBatchFlush);
 
-		return new SplunkHECAppender(name, config, dropEventsOnQueueFull,
-				maxQueueSize, filter, layout, true);
+		return new SplunkHECAppender(name, config, dropEventsOnQueueFull, maxQueueSize, filter, layout, true,
+				activationKey);
 	}
 }

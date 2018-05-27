@@ -41,6 +41,8 @@ public class SplunkRestAppender extends AppenderBase<ILoggingEvent> {
 
 	private Layout<ILoggingEvent> layout;
 
+	private String activationKey;
+
 	/**
 	 * Constructor
 	 */
@@ -61,8 +63,7 @@ public class SplunkRestAppender extends AppenderBase<ILoggingEvent> {
 			else if (delivery.equals(SIMPLE))
 				sri.sendEvent(formatted);
 			else {
-				addError("Unsupported delivery setting for SplunkRestAppender named \""
-						+ this.name + "\".");
+				addError("Unsupported delivery setting for SplunkRestAppender named \"" + this.name + "\".");
 				return;
 			}
 		}
@@ -81,13 +82,12 @@ public class SplunkRestAppender extends AppenderBase<ILoggingEvent> {
 
 		if (sri == null) {
 			try {
-				sri = new SplunkRestInput(user, pass, host, port, red,
-						delivery.equals(STREAM) ? true : false);
+				sri = new SplunkRestInput(user, pass, host, port, red, delivery.equals(STREAM) ? true : false,
+						this.activationKey);
 				sri.setMaxQueueSize(maxQueueSize);
 				sri.setDropEventsOnQueueFull(dropEventsOnQueueFull);
 			} catch (Exception e) {
-				addError("Couldn't establish REST service for SplunkRestAppender named \""
-						+ this.name + "\".");
+				addError("Couldn't establish REST service for SplunkRestAppender named \"" + this.name + "\".");
 			}
 		}
 		super.start();
@@ -217,6 +217,14 @@ public class SplunkRestAppender extends AppenderBase<ILoggingEvent> {
 
 	public void setLayout(Layout<ILoggingEvent> layout) {
 		this.layout = layout;
+	}
+
+	public String getActivationKey() {
+		return this.activationKey;
+	}
+
+	public void setActivationKey(String activationKey) {
+		this.activationKey = activationKey;
 	}
 
 }

@@ -55,14 +55,12 @@ public abstract class SplunkLogEventFactory {
 	 * @return
 	 * @throws Exception
 	 */
-	public static SplunkLogEvent getInstanceFromTemplate(String name)
-			throws Exception {
+	public static SplunkLogEvent getInstanceFromTemplate(String name) throws Exception {
 
 		SplunkLogEvent template = templates.get(name);
 		if (template != null) {
 			return template.clone();
 		} else
-			throw new Exception("SplunkLogEvent template " + name
-					+ " does not exist");
+			throw new Exception("SplunkLogEvent template " + name + " does not exist");
 	}
 }

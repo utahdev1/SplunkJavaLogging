@@ -24,6 +24,8 @@ public class SplunkHECAppender extends AppenderSkeleton {
 
 	private SplunkHECInput shi;
 
+	private String activationKey;
+
 	/**
 	 * Constructor
 	 */
@@ -49,14 +51,12 @@ public class SplunkHECAppender extends AppenderSkeleton {
 
 		try {
 			if (shi == null) {
-				shi = new SplunkHECInput(config);
+				shi = new SplunkHECInput(config, this.activationKey);
 				shi.setMaxQueueSize(maxQueueSize);
 				shi.setDropEventsOnQueueFull(dropEventsOnQueueFull);
 			}
 		} catch (Exception e) {
-			errorHandler
-					.error("Couldn't establish connection for SplunkHECAppender named \""
-							+ this.name + "\".");
+			errorHandler.error("Couldn't establish connection for SplunkHECAppender named \"" + this.name + "\".");
 			return;
 		}
 
@@ -196,8 +196,7 @@ public class SplunkHECAppender extends AppenderSkeleton {
 		return config.getMaxInactiveTimeBeforeBatchFlush();
 	}
 
-	public void setMaxInactiveTimeBeforeBatchFlush(
-			long maxInactiveTimeBeforeBatchFlush) {
+	public void setMaxInactiveTimeBeforeBatchFlush(long maxInactiveTimeBeforeBatchFlush) {
 		config.setMaxInactiveTimeBeforeBatchFlush(maxInactiveTimeBeforeBatchFlush);
 	}
 
@@ -215,6 +214,14 @@ public class SplunkHECAppender extends AppenderSkeleton {
 
 	public void setMaxBatchSizeBytes(String maxBatchSizeBytes) {
 		config.setMaxBatchSizeBytes(maxBatchSizeBytes);
+	}
+
+	public String getActivationKey() {
+		return this.activationKey;
+	}
+
+	public void setActivationKey(String activationKey) {
+		this.activationKey = activationKey;
 	}
 
 }

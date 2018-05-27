@@ -42,12 +42,15 @@ public class SplunkRawTCPInput extends SplunkInput {
 	 *            REST endpoint port
 	 * @throws Exception
 	 */
-	public SplunkRawTCPInput(String host, int port) throws Exception {
+	public SplunkRawTCPInput(String host, int port, String activationKey) throws Exception {
 
-		this.host = host;
-		this.port = port;
+		activationKeyCheck(activationKey);
+		if (activated) {
+			this.host = host;
+			this.port = port;
 
-		openStream();
+			openStream();
+		}
 
 	}
 
@@ -90,35 +93,37 @@ public class SplunkRawTCPInput extends SplunkInput {
 	 */
 	public void streamEvent(String message) {
 
-		String currentMessage = message;
-		try {
+		if (activated) {
+			String currentMessage = message;
+			try {
 
-			if (writerOut != null) {
+				if (writerOut != null) {
 
-				// send the message
-				writerOut.write(currentMessage + "\n");
-
-				// flush the queue
-				while (queueContainsEvents()) {
-					String messageOffQueue = dequeue();
-					currentMessage = messageOffQueue;
+					// send the message
 					writerOut.write(currentMessage + "\n");
+
+					// flush the queue
+					while (queueContainsEvents()) {
+						String messageOffQueue = dequeue();
+						currentMessage = messageOffQueue;
+						writerOut.write(currentMessage + "\n");
+					}
+					writerOut.flush();
 				}
-				writerOut.flush();
-			}
 
-		} catch (IOException e) {
+			} catch (IOException e) {
 
-			// something went wrong , put message on the queue for retry
-			enqueue(currentMessage);
-			try {
-				closeStream();
-			} catch (Exception e1) {
-			}
+				// something went wrong , put message on the queue for retry
+				enqueue(currentMessage);
+				try {
+					closeStream();
+				} catch (Exception e1) {
+				}
 
-			try {
-				openStream();
-			} catch (Exception e2) {
+				try {
+					openStream();
+				} catch (Exception e2) {
+				}
 			}
 		}
 	}

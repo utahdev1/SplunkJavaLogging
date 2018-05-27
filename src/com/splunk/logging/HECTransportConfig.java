@@ -25,7 +25,6 @@ public class HECTransportConfig {
 	public HECTransportConfig() {
 	}
 
-
 	public String getToken() {
 		return token;
 	}
@@ -128,8 +127,7 @@ public class HECTransportConfig {
 			return;
 		}
 		try {
-			factor = Integer.parseInt(rawProperty.substring(0,
-					rawProperty.length() - 2));
+			factor = Integer.parseInt(rawProperty.substring(0, rawProperty.length() - 2));
 		} catch (NumberFormatException e) {
 			return;
 		}
@@ -149,8 +147,7 @@ public class HECTransportConfig {
 		return maxInactiveTimeBeforeBatchFlush;
 	}
 
-	public void setMaxInactiveTimeBeforeBatchFlush(
-			long maxInactiveTimeBeforeBatchFlush) {
+	public void setMaxInactiveTimeBeforeBatchFlush(long maxInactiveTimeBeforeBatchFlush) {
 		this.maxInactiveTimeBeforeBatchFlush = maxInactiveTimeBeforeBatchFlush;
 	}
 

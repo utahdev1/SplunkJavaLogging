@@ -24,6 +24,8 @@ public class SplunkRawTCPAppender extends AppenderSkeleton {
 
 	private SplunkRawTCPInput sri;
 
+	private String activationKey;
+
 	/**
 	 * Constructor
 	 */
@@ -49,14 +51,13 @@ public class SplunkRawTCPAppender extends AppenderSkeleton {
 
 		try {
 			if (sri == null) {
-				sri = new SplunkRawTCPInput(host, port);
+				sri = new SplunkRawTCPInput(host, port, this.activationKey);
 				sri.setMaxQueueSize(maxQueueSize);
 				sri.setDropEventsOnQueueFull(dropEventsOnQueueFull);
 			}
 		} catch (Exception e) {
-			errorHandler
-					.error("Couldn't establish Raw TCP connection for SplunkRawTCPAppender named \""
-							+ this.name + "\".");
+			errorHandler.error(
+					"Couldn't establish Raw TCP connection for SplunkRawTCPAppender named \"" + this.name + "\".");
 			return;
 		}
 
@@ -134,6 +135,14 @@ public class SplunkRawTCPAppender extends AppenderSkeleton {
 
 	public void setDropEventsOnQueueFull(boolean dropEventsOnQueueFull) {
 		this.dropEventsOnQueueFull = dropEventsOnQueueFull;
+	}
+
+	public String getActivationKey() {
+		return this.activationKey;
+	}
+
+	public void setActivationKey(String activationKey) {
+		this.activationKey = activationKey;
 	}
 
 }

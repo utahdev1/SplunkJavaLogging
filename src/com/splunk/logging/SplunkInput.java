@@ -1,7 +1,10 @@
 package com.splunk.logging;
 
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.bind.DatatypeConverter;
 
 /**
  * Common base class for all Splunk Input types. Currently just has shared logic
@@ -27,6 +30,8 @@ public abstract class SplunkInput {
 	private List<String> queue = new ArrayList<String>();
 
 	private long currentQueueSizeInBytes = 0;
+
+	protected boolean activated = false;
 
 	/**
 	 * Add an event to the tail of the FIFO queue subject to there being
@@ -113,8 +118,7 @@ public abstract class SplunkInput {
 			return;
 		}
 		try {
-			factor = Integer.parseInt(rawProperty.substring(0,
-					rawProperty.length() - 2));
+			factor = Integer.parseInt(rawProperty.substring(0, rawProperty.length() - 2));
 		} catch (NumberFormatException e) {
 			return;
 		}
@@ -146,6 +150,29 @@ public abstract class SplunkInput {
 	 */
 	public void setDropEventsOnQueueFull(boolean dropEventsOnQueueFull) {
 		this.dropEventsOnQueueFull = dropEventsOnQueueFull;
+	}
+
+	protected void activationKeyCheck(String activationKey) {
+
+		try {
+
+			String toHash = "Java Logging Appenders";
+
+			byte[] activationBytes = DatatypeConverter.parseHexBinary(activationKey);
+
+			MessageDigest md = MessageDigest.getInstance("MD5");
+
+			byte[] thedigest = md.digest(toHash.getBytes());
+
+			if (!MessageDigest.isEqual(thedigest, activationBytes)) {
+				this.activated = false;
+			} else {
+				this.activated = true;
+			}
+		} catch (Throwable t) {
+			this.activated = false;
+		}
+
 	}
 
 }

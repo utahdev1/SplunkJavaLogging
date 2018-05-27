@@ -25,6 +25,8 @@ public class SplunkRawTCPHandler extends Handler {
 
 	private SplunkRawTCPInput sri;
 
+	private String activationKey;
+
 	/**
 	 * Constructor
 	 */
@@ -34,7 +36,7 @@ public class SplunkRawTCPHandler extends Handler {
 
 		try {
 
-			sri = new SplunkRawTCPInput(this.host, this.port);
+			sri = new SplunkRawTCPInput(this.host, this.port, this.activationKey);
 			sri.setMaxQueueSize(maxQueueSize);
 			sri.setDropEventsOnQueueFull(dropEventsOnQueueFull);
 		} catch (Exception e) {
@@ -51,11 +53,11 @@ public class SplunkRawTCPHandler extends Handler {
 		LogManager manager = LogManager.getLogManager();
 		String cname = getClass().getName();
 
+		this.activationKey = manager.getProperty(cname + ".activationKey");
 		setHost(manager.getProperty(cname + ".host"));
 		setPort(Integer.parseInt(manager.getProperty(cname + ".port")));
 		setMaxQueueSize(manager.getProperty(cname + ".maxQueueSize"));
-		setDropEventsOnQueueFull(Boolean.parseBoolean(manager.getProperty(cname
-				+ ".dropEventsOnQueueFull")));
+		setDropEventsOnQueueFull(Boolean.parseBoolean(manager.getProperty(cname + ".dropEventsOnQueueFull")));
 		setLevel(Level.parse(manager.getProperty(cname + ".level")));
 		setFilter(null);
 		setFormatter(new SplunkFormatter());
@@ -140,6 +142,14 @@ public class SplunkRawTCPHandler extends Handler {
 
 	public void setDropEventsOnQueueFull(boolean dropEventsOnQueueFull) {
 		this.dropEventsOnQueueFull = dropEventsOnQueueFull;
+	}
+
+	public String getActivationKey() {
+		return this.activationKey;
+	}
+
+	public void setActivationKey(String activationKey) {
+		this.activationKey = activationKey;
 	}
 
 	@Override
