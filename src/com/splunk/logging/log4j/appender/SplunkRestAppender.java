@@ -10,7 +10,7 @@ import com.splunk.logging.SplunkRestInput;
 /**
  * Log4j Appender for sending events to Splunk via REST
  * 
- * @author Damien Dallimore damien@dtdsoftware.com
+ * @author Damien Dallimore damien@baboonbones.com
  * 
  */
 public class SplunkRestAppender extends AppenderSkeleton {

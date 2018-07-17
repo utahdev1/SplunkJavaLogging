@@ -4,7 +4,7 @@ package com.splunk.logging;
  * A helper class to encapsulate URL parameters for submitting events to Splunk
  * via REST endpoints
  * 
- * @author Damien Dallimore damien@dtdsoftware.com
+ * @author Damien Dallimore damien@baboonbones.com
  * 
  */
 public class RestEventData {

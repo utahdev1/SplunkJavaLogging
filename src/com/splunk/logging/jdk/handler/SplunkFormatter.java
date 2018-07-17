@@ -6,7 +6,7 @@ import java.util.logging.LogRecord;
 /**
  * Custom formatter that simply echos the logged message
  * 
- * @author Damien Dallimore damien@dtdsoftware.com
+ * @author Damien Dallimore damien@baboonbones.com
  * 
  */
 public class SplunkFormatter extends Formatter {

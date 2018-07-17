@@ -36,7 +36,7 @@ import org.apache.http.nio.reactor.ConnectingIOReactor;
 /**
  * Common HEC logic shared by all appenders/handlers
  * 
- * @author Damien Dallimore damien@dtdsoftware.com
+ * @author Damien Dallimore damien@baboonbones.com
  * 
  */
 

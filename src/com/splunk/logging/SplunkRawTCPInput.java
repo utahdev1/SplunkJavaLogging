@@ -9,7 +9,7 @@ import java.net.Socket;
 /**
  * Common Raw TCP logic shared by all appenders/handlers
  * 
- * @author Damien Dallimore damien@dtdsoftware.com
+ * @author Damien Dallimore damien@baboonbones.com
  * 
  */
 

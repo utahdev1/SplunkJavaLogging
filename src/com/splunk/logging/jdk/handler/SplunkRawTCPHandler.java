@@ -10,7 +10,7 @@ import com.splunk.logging.SplunkRawTCPInput;
 /**
  * java.util.logging handler for sending events to Splunk via Raw TCP
  * 
- * @author Damien Dallimore damien@dtdsoftware.com
+ * @author Damien Dallimore damien@baboonbones.com
  * 
  */
 public class SplunkRawTCPHandler extends Handler {

@@ -11,7 +11,7 @@ import com.splunk.logging.SplunkHECInput;
 /**
  * java.util.logging handler for sending events to Splunk via HEC endpoint
  * 
- * @author Damien Dallimore damien@dtdsoftware.com
+ * @author Damien Dallimore damien@baboonbones.com
  * 
  */
 public class SplunkHECHandler extends Handler {

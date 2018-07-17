@@ -10,7 +10,7 @@ import ch.qos.logback.core.Layout;
 /**
  * LogBack Appender for sending events to Splunk via HEC Endpoint
  * 
- * @author Damien Dallimore damien@dtdsoftware.com
+ * @author Damien Dallimore damien@baboonbones.com
  * 
  */
 public class SplunkHECAppender extends AppenderBase<ILoggingEvent> {

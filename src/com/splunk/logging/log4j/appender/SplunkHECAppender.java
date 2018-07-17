@@ -10,7 +10,7 @@ import com.splunk.logging.SplunkHECInput;
 /**
  * Log4j Appender for sending events to Splunk via HEC Endpoint
  * 
- * @author Damien Dallimore damien@dtdsoftware.com
+ * @author Damien Dallimore damien@baboonbones.com
  * 
  */
 public class SplunkHECAppender extends AppenderSkeleton {

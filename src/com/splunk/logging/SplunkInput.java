@@ -10,7 +10,7 @@ import javax.xml.bind.DatatypeConverter;
  * Common base class for all Splunk Input types. Currently just has shared logic
  * for queuing up events.
  * 
- * @author Damien Dallimore damien@dtdsoftware.com
+ * @author Damien Dallimore damien@baboonbones.com
  * 
  */
 public abstract class SplunkInput {

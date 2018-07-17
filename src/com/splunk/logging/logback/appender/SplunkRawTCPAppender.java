@@ -9,7 +9,7 @@ import ch.qos.logback.core.Layout;
 /**
  * LogBack Appender for sending events to Splunk via Raw TCP
  * 
- * @author Damien Dallimore damien@dtdsoftware.com
+ * @author Damien Dallimore damien@baboonbones.com
  * 
  */
 public class SplunkRawTCPAppender extends AppenderBase<ILoggingEvent> {

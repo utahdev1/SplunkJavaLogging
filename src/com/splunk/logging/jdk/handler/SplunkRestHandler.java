@@ -11,7 +11,7 @@ import com.splunk.logging.SplunkRestInput;
 /**
  * java.util.logging handler for sending events to Splunk via REST
  * 
- * @author Damien Dallimore damien@dtdsoftware.com
+ * @author Damien Dallimore damien@baboonbones.com
  * 
  */
 public class SplunkRestHandler extends Handler {

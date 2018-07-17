@@ -18,7 +18,7 @@ import java.util.Map;
  * 
  * </code>
  * 
- * @author Damien Dallimore damien@dtdsoftware.com
+ * @author Damien Dallimore damien@baboonbones.com
  * 
  */
 public abstract class SplunkLogEventFactory {

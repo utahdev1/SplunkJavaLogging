@@ -11,7 +11,7 @@ import com.splunk.logging.SplunkLogEvent;
  * For this example I am using the SLF4J facade, and you can plug in jdk logging, log4j or logback as the implementation.
  * </pre>
  * 
- * @author Damien Dallimore damien@dtdsoftware.com
+ * @author Damien Dallimore damien@baboonbones.com
  * 
  */
 public class Example {
