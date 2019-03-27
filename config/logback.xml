@@ -6,7 +6,7 @@
 
 <!--Send log events to  a Splunk REST endpoint-->
   <appender name="splunkrest" class="com.splunk.logging.logback.appender.SplunkRestAppender">
-  <!--Visit http://www.baboonbones.com/#activation to obtain a free,non-expiring key -->
+  <!--Visit http://www.baboonbones.com/#activation to obtain a non-expiring key -->
     <activationKey>YOURKEY</activationKey>
     <port>8089</port>
     <host>localhost</host>
@@ -29,7 +29,7 @@
   
 <!--Send log events to a Splunk Raw TCP server socket-->
   <appender name="splunkrawtcp" class="com.splunk.logging.logback.appender.SplunkRawTCPAppender">
-  <!--Visit http://www.baboonbones.com/#activation to obtain a free,non-expiring key -->
+  <!--Visit http://www.baboonbones.com/#activation to obtain a non-expiring key -->
     <activationKey>YOURKEY</activationKey>
     <port>5151</port>
     <host>somehost</host>
@@ -46,7 +46,7 @@
   
 <!--Send log events to a Splunk HEC Endpoint-->
   <appender name="splunkhec" class="com.splunk.logging.logback.appender.SplunkHECAppender">
-  <!--Visit http://www.baboonbones.com/#activation to obtain a free,non-expiring key -->
+  <!--Visit http://www.baboonbones.com/#activation to obtain a non-expiring key -->
     <activationKey>YOURKEY</activationKey>
     <port>8088</port>
     <host>localhost</host>
